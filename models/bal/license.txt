@@ -1,0 +1,11 @@
+Model Information:
+* title:	BALENSIGA T-SHIRT
+* source:	https://sketchfab.com/3d-models/balensiga-t-shirt-8ec624e401024ebfbca472794d12fa4f
+* author:	Ahmad Riazi (https://sketchfab.com/ahmadriazi)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "BALENSIGA T-SHIRT" (https://sketchfab.com/3d-models/balensiga-t-shirt-8ec624e401024ebfbca472794d12fa4f) by Ahmad Riazi (https://sketchfab.com/ahmadriazi) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

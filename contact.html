@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
 
+  <!-- Include Three.js and GLTFLoader -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/examples/js/loaders/GLTFLoader.js"></script>
+
   <style media="screen">
     html, body {
       height: 100%;
@@ -43,14 +47,7 @@
       text-decoration: underline;
     }
 
-    h1 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 0;
-  padding: 0; /* No padding to ensure it is at the very corner */
-  color: white;
-}
+   
 @keyframes fadeIn {
     from {
       opacity: 0;
@@ -95,7 +92,7 @@
       width: 100%;
       padding: 1em;
       border: none;
-      background-color: lightslategray;
+      background-color: #4CAF50;
       color: white;
       cursor: pointer;
       border-radius: 4px;
@@ -105,36 +102,371 @@
     }
 
     .contact-form input[type='submit']:hover {
-      background-color: #45a049;
+      background-color: #388E3C;
       animation-name: fadeIn;
     animation-duration: 1s; /* Adjust the time as needed */
     animation-fill-mode: both;
     }
+    /* Style for the bottom-right image */
+    #bottom-right-image {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      z-index: 2;
+      width: 125px; /* Adjust size as needed */
+      height: auto;
+    }
+    /* Logo Container */
+    #logo-container {
+      width: 100px;
+      height: 100px;
+      position: fixed;
+      top: 5px;
+      left: 0;
+      z-index: 2;
+    }
+    /* Style for the active navigation link */
+.navigation-bar a.active {
+  text-decoration: underline;
+}
+.tooltip {
+  position: absolute;
+  padding: 8px 12px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.9em;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  white-space: nowrap;
+  z-index: 9999; /* Ensure tooltips appear above other elements */
+}
+#bottom-right-image.active {
+  width: 180px; /* Increased width from 125px to 150px */
+  bottom: -35px;
+  right: -15px;  /* Reduced bottom padding from 10px to 5px */
+  transition: width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
+}
   </style>
 </head>
 <body>
 
-  <h1> <a href="index.html">
-    <img src="imagehome.png" alt="My Website" style="height: 500px; width: auto;"/> <!-- Adjust height as needed -->
-  </h1>
+  
   <nav class="navigation-bar">
     <a href="newabout.html">About</a>
-    <a href="newport.html">Portfolio</a>
-    <a href="contact.html">Contact</a>
+    <a href="newport.html">Catalog</a>
+    <a href="contact.html" class="active">Contact</a>
   </nav>
+  <!-- Logo Container -->
+  <div id="logo-container"></div>
 
   <div class="contact-form">
     <div class="contact-header">
       <h2>Contact</h2>
     </div>
     
-    <form action="/action_page.php">
+    <!-- Updated form tag with id for AJAX -->
+    <form id="contactForm" action="https://formspree.io/f/xeqyvblg" method="POST">
       <input type="text" id="name" name="name" placeholder="Name">
       <input type="text" id="email" name="email" placeholder="Email address">
       <textarea id="message" name="message" placeholder="Message" style="height:150px"></textarea>
       <input type="submit" value="Submit">
     </form>
-  </div>
+    <div id="formFeedback"></div> <!-- Element to display the feedback message -->
+  
 
+  </div>
+  <!-- Bottom Right Image -->
+  <img id="bottom-right-image" src="cd.png" alt="Description">
+  <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/examples/js/controls/OrbitControls.js"></script>
+
+  <!-- Tooltip for Logo -->
+<div id="logo-tooltip" class="tooltip">Home</div>
+
+<!-- Tooltip for CD Image -->
+<div id="cd-tooltip" class="tooltip">Radio Off</div>
+  <!-- Your JavaScript code -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Include jQuery -->
+  <script>
+      $(document).ready(function(){
+      $('#contactForm').submit(function(event){
+        event.preventDefault(); // Prevent the default form submit
+  
+        var submitButton = $('#contactForm input[type="submit"]');
+        var originalButtonText = submitButton.val();
+        var originalButtonColor = submitButton.css('background-color'); // Store the original color
+  
+        $.ajax({
+          url: 'https://formspree.io/f/xeqyvblg', // Your Formspree endpoint
+          method: 'POST',
+          data: $(this).serialize(),
+          dataType: 'json',
+          
+          success: function(data) {
+            submitButton.val('Thanks!').css('background-color', 'green'); // Change button text to 'Thank you!' and color to green
+            $('#contactForm')[0].reset(); // Clear the form fields
+            // Reset the button after 2 seconds
+            setTimeout(function(){
+              submitButton.val(originalButtonText).css('background-color', originalButtonColor).removeAttr('disabled');
+            }, 2000);
+          },
+          error: function(err) {
+            submitButton.val('Error!').css('background-color', 'red'); // Change button text to 'Error!' and color to red
+            // Reset the button after 2 seconds
+            setTimeout(function(){
+              submitButton.val(originalButtonText).css('background-color', originalButtonColor).removeAttr('disabled');
+            }, 2000);
+          }
+        });
+      });
+    });
+    // Wait for the DOM to be fully loaded
+    window.addEventListener('load', function() {
+      // === Spinning Logo Code ===
+
+      // Create the scene for the logo
+      const logoScene = new THREE.Scene();
+
+      // Set up the camera for the logo
+      const logoCamera = new THREE.PerspectiveCamera(80, 1, 0.1, 1000);
+      logoCamera.position.z = 1;
+
+      // Create the renderer for the logo
+      const logoRenderer = new THREE.WebGLRenderer({ alpha: true });
+      logoRenderer.setSize(100, 100);
+      logoRenderer.setPixelRatio(window.devicePixelRatio);
+      document.getElementById('logo-container').appendChild(logoRenderer.domElement);
+
+      // Add lights to the logo scene
+      const logoAmbientLight = new THREE.AmbientLight(0xffffff, 0.8); // Soft white light
+      logoScene.add(logoAmbientLight);
+
+      const logoDirectionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      logoDirectionalLight.position.set(5, 10, 7.5); // Adjust position as needed
+      logoScene.add(logoDirectionalLight);
+
+      // Variable to hold the logo model
+      const logoRaycaster = new THREE.Raycaster();
+    const logoMouse = new THREE.Vector2();
+      let logoModel;
+
+      // Load the logo model
+      const logoLoader = new THREE.GLTFLoader();
+      logoLoader.load(
+        'logo.v2.glb',
+        function(gltf) {
+        logoModel = gltf.scene;
+        logoModel.traverse((child)=>{
+          if(child.isMesh) {
+            child.material.side = THREE.DoubleSide;
+            child.material.needsUpdate = true;
+          }
+        });
+        logoScene.add(logoModel);
+      },
+      undefined,
+      function(error){
+        console.error(error);
+      }
+    );
+    logoRenderer.domElement.addEventListener('click', onLogoClickLogo, false);
+    function onLogoClickLogo(event) {
+      const rect = logoRenderer.domElement.getBoundingClientRect();
+      logoMouse.x = ((event.clientX-rect.left)/rect.width)*2-1;
+      logoMouse.y = -((event.clientY-rect.top)/rect.height)*2+1;
+
+      logoRaycaster.setFromCamera(logoMouse,logoCamera);
+
+      if(logoModel){
+        const intersects = logoRaycaster.intersectObject(logoModel,true);
+        if(intersects.length>0){
+          window.location.href='index.html';
+        }
+      }
+    }
+
+    logoRenderer.domElement.addEventListener('mousemove',onLogoMouseMove,false);
+
+    function onLogoMouseMove(event) {
+      const rect = logoRenderer.domElement.getBoundingClientRect();
+      logoMouse.x = ((event.clientX-rect.left)/rect.width)*2-1;
+      logoMouse.y = -((event.clientY-rect.top)/rect.height)*2+1;
+
+      logoRaycaster.setFromCamera(logoMouse,logoCamera);
+
+      let intersects=[];
+      if(logoModel){
+        intersects=logoRaycaster.intersectObject(logoModel,true);
+      }
+
+      logoRenderer.domElement.style.cursor = intersects.length>0?'pointer':'default';
+    }
+      // Animation loop for the logo
+      function animateLogo() {
+        requestAnimationFrame(animateLogo);
+
+        // Rotate the model
+        if (logoModel) {
+          logoModel.rotation.y += 0.01;
+        }
+
+        logoRenderer.render(logoScene, logoCamera);
+      }
+
+      animateLogo();
+    });
+ /*****************************************
+ * TOOLTIP LOGIC FOR LOGO & CD
+ *****************************************/
+// Grab the tooltip elements
+const logoTooltip = document.getElementById('logo-tooltip');
+const cdTooltip = document.getElementById('cd-tooltip');
+
+// 1. CD Image Tooltip Setup
+const cdImage = document.getElementById('bottom-right-image');
+if (cdImage) {
+  cdImage.addEventListener('mouseenter', showTooltipCD);
+  cdImage.addEventListener('mousemove', moveTooltipCD);
+  cdImage.addEventListener('mouseleave', hideTooltipCD);
+}
+
+function showTooltipCD(event) {
+  cdTooltip.textContent = 'Radio Off'; // or conditionally check bottomRightImage.alt if needed
+  cdTooltip.style.opacity = '1';
+  positionTooltipCD(event);
+}
+
+function moveTooltipCD(event) {
+  if (cdTooltip.style.opacity === '1') {
+    positionTooltipCD(event);
+  }
+}
+
+function positionTooltipCD(event) {
+  const tooltipWidth = cdTooltip.offsetWidth;
+  const tooltipHeight = cdTooltip.offsetHeight;
+  const pageWidth = window.innerWidth;
+  const pageHeight = window.innerHeight;
+
+  let tooltipX = event.clientX + 10; // Offset horizontally
+  let tooltipY = event.clientY - tooltipHeight - 10; // Offset vertically above cursor
+
+  // Prevent tooltip from going off the right edge
+  if (tooltipX + tooltipWidth > pageWidth) {
+    tooltipX = event.clientX - tooltipWidth - 10;
+  }
+  // Prevent tooltip from going above the top edge
+  if (tooltipY < 0) {
+    tooltipY = event.clientY + 10;
+  }
+
+  cdTooltip.style.left = tooltipX + 'px';
+  cdTooltip.style.top = tooltipY + 'px';
+}
+
+function hideTooltipCD() {
+  cdTooltip.style.opacity = '0';
+}
+// 2. LOGO Tooltip Setup
+// If your logo uses a separate WebGLRenderer with a canvas in #model-container:
+
+
+if (logoRenderer) {
+  logoRenderer.addEventListener('mousemove', (event) => {
+    // If the raycast intersects the logo model, show tooltip
+    // For now, let's show the tooltip whenever the mouse is over the canvas
+    showLogoTooltip(event.clientX, event.clientY, 'Home');
+  });
+  logoRenderer.addEventListener('mouseleave', hideLogoTooltip);
+}
+
+function showLogoTooltip(x, y, text) {
+  logoTooltip.textContent = text;
+  logoTooltip.style.left = (x + 10) + 'px';
+  logoTooltip.style.top = y + 'px';
+  logoTooltip.style.opacity = '1';
+}
+
+function hideLogoTooltip() {
+  logoTooltip.style.opacity = '0';
+}
+</script>
+<script>
+  (function() {
+    // Define the playlist array with your audio file paths
+    const playlist = [
+      'song1.mp3',
+      'song2.mp3',
+      'song3.mp3'
+      // Add more songs as needed
+    ];
+  
+    // Initialize the current track index
+    let currentTrackIndex = 0;
+  
+    // Create the Audio object without setting the source initially
+    const radioAudio = new Audio();
+    radioAudio.src = playlist[currentTrackIndex];
+    radioAudio.loop = false; // No looping individual tracks
+    radioAudio.autoplay = false; // User interaction required to play
+  
+    // Event listener for when a track ends
+    radioAudio.addEventListener('ended', function() {
+      // Select a random track index
+      let nextTrackIndex = Math.floor(Math.random() * playlist.length);
+      
+      // Optional: Prevent the same track from playing consecutively
+      if (playlist.length > 1) { // Ensure there are at least two tracks
+        while (nextTrackIndex === currentTrackIndex) {
+          nextTrackIndex = Math.floor(Math.random() * playlist.length);
+        }
+      }
+      
+      currentTrackIndex = nextTrackIndex; // Update the current track index
+      radioAudio.src = playlist[currentTrackIndex];
+      radioAudio.play().catch(err => {
+        console.error('Error playing next track:', err);
+      });
+    });
+  
+    // Get the CD image and tooltip elements
+    const cdImage = document.getElementById('bottom-right-image');
+    const cdTooltip = document.getElementById('cd-tooltip');
+  
+    if (!cdImage || !cdTooltip) {
+      console.error('CD image or tooltip element not found.');
+      return;
+    }
+  
+    // Function to toggle radio (playlist) playback
+    function toggleRadio() {
+      if (radioAudio.paused) {
+        radioAudio.play().then(() => {
+          cdImage.src = 'cd.gif'; // Spinning CD animation
+          cdImage.alt = 'Radio On';
+          cdTooltip.textContent = 'Radio On';
+          cdImage.classList.add('active'); // Add the 'active' class
+        }).catch(err => {
+          console.error('Playlist play error:', err);
+        });
+      } else {
+        radioAudio.pause();
+        cdImage.src = 'cd.png';
+        cdImage.alt = 'Radio Off';
+        cdTooltip.textContent = 'Radio Off';
+        cdImage.classList.remove('active'); // Remove the 'active' class
+      }
+    }
+
+    // Attach click event listener to the CD image
+    cdImage.addEventListener('click', toggleRadio);
+
+    // Optional: Initialize tooltip content based on initial state
+    window.addEventListener('DOMContentLoaded', (event) => {
+      cdTooltip.textContent = radioAudio.paused ? 'Radio Off' : 'Radio On';
+    });
+  })();
+</script>
 </body>
 </html>
