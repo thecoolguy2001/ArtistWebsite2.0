@@ -359,21 +359,36 @@
     font-size: 2em; /* Smaller font size for mobile */
     margin-bottom: 0.5em; /* Adjust spacing under the title */
   }
+
+  /* Center the Text Container */
   .text-container {
-    width: 90%; /* Take most of the screen width */
-    margin: 0 auto; /* Center horizontally */
-    text-align: center; /* Center text content */
-    position: relative;
+    width: 90%; /* Adjust width for responsiveness */
+    margin: 0 auto; /* Center the container horizontally */
+    text-align: center; /* Center-align all text */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    position: relative; /* Position within its parent container */
     padding: 10px 0; /* Add slight padding for spacing */
   }
 
-  /* Center the Shopify Button */
+  /* Adjust the Shopify Button */
   #product-component-1733950072571 {
-    margin: 10px auto; /* Center the button horizontally */
-    text-align: center;
+    margin: 10px auto; /* Center horizontally */
     display: flex;
-    justify-content: center; /* Center horizontally */
+    justify-content: center; /* Ensure button is centered */
+    align-items: center;
   }
+
+  /* Ensure Model and Text Alignment in Mobile View */
+  .profile-container {
+    flex-direction: column; /* Stack model and text vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    height: 100%; /* Full height for centering */
+  }
+
 
   /* Make Next and Back Buttons Smaller */
   .next-page-button,
