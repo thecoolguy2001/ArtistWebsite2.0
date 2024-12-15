@@ -227,6 +227,45 @@
   .tooltip {
     display: none;
   }
+  .contact-form {
+    width: 90%; /* Set the form to occupy 90% of the viewport width */
+    margin: 20px auto; /* Center the form and add vertical spacing */
+    padding: 10px; /* Optional: Add padding for better spacing */
+    box-sizing: border-box; /* Ensure padding doesn't affect overall width */
+  }
+
+  /* 13. Adjust Form Elements for Mobile */
+  .contact-form input[type='text'],
+  .contact-form textarea {
+    width: 100%; /* Ensure inputs take full width of the container */
+    padding: 0.5em; /* Adjust padding for better touch targets */
+    margin-bottom: 1em; /* Maintain spacing between fields */
+    border: 1px solid #ccc; /* Retain border styling */
+    border-radius: 4px; /* Retain border-radius for consistency */
+    font-size: 1em; /* Adjust font size for readability */
+  }
+
+  .contact-form input[type='submit'] {
+    width: 100%; /* Ensure the submit button takes full width */
+    padding: 1em; /* Increase padding for easier tapping */
+    border: none; /* Remove border for a cleaner look */
+    background-color: #4CAF50; /* Retain background color */
+    color: white; /* Retain text color */
+    cursor: pointer; /* Retain cursor style */
+    border-radius: 4px; /* Retain border-radius */
+    font-size: 1em; /* Adjust font size for readability */
+  }
+
+  .contact-form input[type='submit']:hover {
+    background-color: #388E3C; /* Retain hover effect */
+  }
+
+  /* 14. Optional: Adjust Header Font Size */
+  .contact-header h2 {
+    font-size: 1.8em; /* Reduce font size for mobile */
+    margin-top: 0.5em; /* Adjust top margin if necessary */
+    margin-bottom: 1em; /* Adjust bottom margin if necessary */
+  }
 
   /* 8. Optional: Hide Certain Elements on Mobile */
   /* If certain elements are too bulky for mobile, consider hiding them */
