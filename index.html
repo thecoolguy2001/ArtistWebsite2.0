@@ -163,14 +163,14 @@
     right: 0;
     display: flex;
     flex-wrap: nowrap;
-    padding: 10px 15px;
+    padding: 10px 10px;
     justify-content: flex-end;
     max-width: 300px;
     width: auto;
   }
 
   .navigation-bar a {
-    margin: 0 5px; /* Reduce margin for tighter spacing */
+    margin: 0 2px; /* Reduce margin for tighter spacing */
     font-size: 1em; /* Adjust font size for better fit */
     padding: 8px 10px; /* Reduce padding for smaller touch targets */
     display: inline-block;
@@ -195,6 +195,7 @@
     width: 100% !important;
     height: 100% !important;
     display: block;
+    pointer-events: auto;
   }
 
   /* 4. Adjust Video Background */
@@ -968,84 +969,76 @@ function hideTooltipCD() {
       });
   
       /*************************************
-       * TOUCH CONTROLS FOR CAROUSEL
-       *************************************/
-    
-      // Access carouselRenderer and carouselGroup from the main carousel script
-      // Ensure this script runs after the carousel script or place it within the same script
-    
-      // Variables to track touch interactions
-      let touchStartX = 0;
-      let touchEndX = 0;
-      let touchStartY = 0;
-      let touchEndY = 0;
-      const swipeThreshold = 50; // Minimum swipe distance in pixels to consider as a swipe
-      let isTap = true;
-      const tapThreshold = 10; // Maximum movement in pixels to consider as a tap
-  
-      // Assuming carouselRenderer and carouselGroup are globally accessible
-      // If not, you need to expose them or integrate this code within the carousel script
-  
-      // Add touch event listeners to the carousel renderer's DOM element
-      carouselRenderer.domElement.addEventListener('touchstart', onTouchStart, false);
-      carouselRenderer.domElement.addEventListener('touchmove', onTouchMove, false);
-      carouselRenderer.domElement.addEventListener('touchend', onTouchEnd, false);
-  
-      // Prevent default touch behavior to avoid scrolling when interacting with the carousel
-      carouselRenderer.domElement.addEventListener('touchmove', function(event) {
-        event.preventDefault();
-      }, { passive: false });
-  
-      function onTouchStart(event) {
-        if (event.touches.length === 1) { // Only consider single touch
-          touchStartX = event.touches[0].clientX;
-          touchStartY = event.touches[0].clientY;
-          isTap = true;
-        }
+ * POINTER EVENTS FOR CAROUSEL
+ *************************************/
+
+// Variables to track pointer interactions
+let pointerStartX = 0;
+let pointerEndX = 0;
+let pointerStartY = 0;
+let pointerEndY = 0;
+const swipeThreshold = 50; // Minimum swipe distance in pixels to consider as a swipe
+let isTap = true;
+const tapThreshold = 10; // Maximum movement in pixels to consider as a tap
+
+// Add pointer event listeners to the carousel renderer's DOM element
+carouselRenderer.domElement.addEventListener('pointerdown', onPointerDown, false);
+carouselRenderer.domElement.addEventListener('pointermove', onPointerMove, false);
+carouselRenderer.domElement.addEventListener('pointerup', onPointerUp, false);
+
+// Prevent default touch actions to avoid scrolling when interacting with the carousel
+carouselRenderer.domElement.style.touchAction = 'none';
+
+function onPointerDown(event) {
+  if (event.pointerType === 'touch' || event.pointerType === 'mouse') {
+    pointerStartX = event.clientX;
+    pointerStartY = event.clientY;
+    isTap = true;
+  }
+}
+
+function onPointerMove(event) {
+  if (event.pointerType === 'touch' || event.pointerType === 'mouse') {
+    pointerEndX = event.clientX;
+    pointerEndY = event.clientY;
+    const moveX = Math.abs(pointerEndX - pointerStartX);
+    const moveY = Math.abs(pointerEndY - pointerStartY);
+    if (moveX > tapThreshold || moveY > tapThreshold) {
+      isTap = false;
+    }
+  }
+}
+
+function onPointerUp(event) {
+  const swipeDistance = pointerEndX - pointerStartX;
+
+  if (!isTap) { // It's a swipe
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance < 0) {
+        // Swiped left - rotate carousel to the right
+        carouselTargetAngle -= Math.PI / 4; // Adjust the rotation angle as needed
+      } else {
+        // Swiped right - rotate carousel to the left
+        carouselTargetAngle += Math.PI / 4; // Adjust the rotation angle as needed
       }
-  
-      function onTouchMove(event) {
-        if (event.touches.length === 1) { // Only consider single touch
-          touchEndX = event.touches[0].clientX;
-          touchEndY = event.touches[0].clientY;
-          const moveX = Math.abs(touchEndX - touchStartX);
-          const moveY = Math.abs(touchEndY - touchStartY);
-          if (moveX > tapThreshold || moveY > tapThreshold) {
-            isTap = false;
-          }
-        }
-      }
-  
-      function onTouchEnd(event) {
-        const swipeDistance = touchEndX - touchStartX;
-  
-        if (!isTap) { // It's a swipe
-          if (Math.abs(swipeDistance) > swipeThreshold) {
-            if (swipeDistance < 0) {
-              // Swiped left - rotate carousel to the right
-              carouselTargetAngle -= Math.PI / 4; // Adjust the rotation angle as needed
-            } else {
-              // Swiped right - rotate carousel to the left
-              carouselTargetAngle += Math.PI / 4; // Adjust the rotation angle as needed
-            }
-          }
-        } else { // It's a tap
-          // Manually trigger the click event
-          const clickEvent = new MouseEvent('click', {
-            view: window,
-            bubbles: true,
-            cancelable: true
-          });
-          carouselRenderer.domElement.dispatchEvent(clickEvent);
-        }
-  
-        // Reset touch positions
-        touchStartX = 0;
-        touchEndX = 0;
-        touchStartY = 0;
-        touchEndY = 0;
-        isTap = true;
-      }
+    }
+  } else { // It's a tap
+    // Manually trigger the click event
+    const clickEvent = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true
+    });
+    carouselRenderer.domElement.dispatchEvent(clickEvent);
+  }
+
+  // Reset pointer positions
+  pointerStartX = 0;
+  pointerEndX = 0;
+  pointerStartY = 0;
+  pointerEndY = 0;
+  isTap = true;
+}
   
     })();
   </script>
