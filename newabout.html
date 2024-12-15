@@ -245,6 +245,28 @@
   /* 7. Remove Tooltips on Mobile */
   .tooltip {
     display: none;
+    .profile-container {
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;    /* Center items horizontally */
+    justify-content: flex-start; /* Align items to the top */
+  }
+
+  /* 10. Adjust 3D Container and Text Container */
+  #container3D, .text-container {
+    width: 90%; /* Make containers almost full width */
+    margin: 10px 0; /* Add vertical spacing */
+  }
+
+  /* Optional: Adjust Heights if Necessary */
+  #container3D {
+    height: 300px; /* Set a fixed height or adjust as needed */
+  }
+
+  /* Optional: Adjust Text Alignment */
+  .text-container {
+    text-align: center; /* Center text for better readability */
+  }
+
   }
 
   /* 8. Optional: Hide Certain Elements on Mobile */
