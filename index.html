@@ -525,19 +525,9 @@ const createCarousel = (modelPaths, numItems, radius) => {
         } else if (modelPath.includes('painting_faith')) {
           object.userData.url = 'port6.html';
         }
-        // Add a clickable plane behind the model
-    const padding = 500; // Increase tap area
-    const clickablePlane = new THREE.Mesh(
-      new THREE.PlaneGeometry(size.x + padding, size.y + padding),
-      new THREE.MeshBasicMaterial({ visible: false }) // Invisible plane
-    );
-    clickablePlane.position.copy(object.position); // Match the model's position
-    clickablePlane.userData.url = object.userData.url; // Assign the same URL as the model
-
         // Add more models and URLs as needed
 
         carouselGroup.add(object);
-        carouselGroup.add(clickablePlane);
         // Increment loaded models counter
         modelsLoaded++;
 
@@ -1000,7 +990,7 @@ function hideTooltipCD() {
         cdTooltip.textContent = radioAudio.paused ? 'Radio Off' : 'Radio On';
       });
   
- /*************************************
+  /*************************************
  * POINTER EVENTS FOR CAROUSEL
  *************************************/
 
