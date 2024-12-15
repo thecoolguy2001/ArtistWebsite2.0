@@ -328,85 +328,78 @@
       .tooltip {
         display: none;
       }
-
-      /* 9. Adjust Profile Container for Mobile */
-      .profile-container {
-        flex-direction: column; /* Stack children vertically */
-        align-items: center;    /* Center items horizontally */
-        justify-content: flex-start; /* Align items to the top */
-      }
-
-      /* 10. Adjust 3D Container and Text Container */
-      #container3D, .text-container {
-        width: 90%; /* Make containers almost full width */
-        margin: 10px 0; /* Add vertical spacing */
-      }
-
-      /* Optional: Adjust Heights if Necessary */
-      #container3D {
-        height: 300px; /* Set a fixed height or adjust as needed */
-      }
-
-    
-
-  /* Adjust spacing for art details */
-  .art-details p,
-  .art-description p {
-    margin-bottom: 0.5em; /* Reduce vertical spacing between details */
+  /* Center the Profile Container */
+  .profile-container {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;    /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    width: 100%;
+    height: auto;
+    margin: 0 auto; /* Center within the page */
+    text-align: center;
   }
 
-  .art-title {
-    font-size: 2em; /* Smaller font size for mobile */
-    margin-bottom: 0.5em; /* Adjust spacing under the title */
+  /* Center the 3D Model Container */
+  #container3D {
+    width: 100%; /* Full width */
+    height: 300px; /* Set a fixed height */
+    margin: 0 auto; /* Center the container horizontally */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* Center the Text Container */
   .text-container {
     width: 90%; /* Adjust width for responsiveness */
-    margin: 0 auto; /* Center the container horizontally */
-    text-align: center; /* Center-align all text */
+    margin: 10px auto; /* Center horizontally with vertical spacing */
+    padding: 10px 0; /* Add slight padding */
+    text-align: center; /* Center the content */
     display: flex;
-    flex-direction: column;
-    align-items: center; /* Center content horizontally */
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Center all elements horizontally */
     justify-content: center; /* Center content vertically */
-    position: relative; /* Position within its parent container */
-    padding: 10px 0; /* Add slight padding for spacing */
   }
 
-  /* Adjust the Shopify Button */
+  /* Reduce Font Sizes for Mobile */
+  .art-title {
+    font-size: 2em; /* Smaller font size */
+    margin-bottom: 0.5em;
+  }
+
+  .art-details p,
+  .art-description p {
+    font-size: 1em; /* Adjust details font size */
+    margin-bottom: 0.5em; /* Reduce spacing */
+  }
+
+  /* Adjust Shopify Buy Button */
   #product-component-1733950072571 {
     margin: 10px auto; /* Center horizontally */
     display: flex;
-    justify-content: center; /* Ensure button is centered */
+    justify-content: center; /* Center button content */
     align-items: center;
+    width: 90%; /* Make button span most of the screen */
   }
-
-  /* Ensure Model and Text Alignment in Mobile View */
-  .profile-container {
-    flex-direction: column; /* Stack model and text vertically */
-    align-items: center; /* Center horizontally */
-    justify-content: center; /* Center vertically */
-    height: 100%; /* Full height for centering */
-  }
-
 
   /* Make Next and Back Buttons Smaller */
   .next-page-button,
   .back-page-button {
-    font-size: 1.2em; /* Reduce button size */
-    padding: 8px; /* Adjust padding for smaller touch area */
-    width: 35px; /* Slightly smaller button */
-    height: 35px;
+    font-size: 1.5em; /* Reduce button size */
+    padding: 10px; /* Adjust padding */
+    width: 40px; /* Slightly smaller width */
+    height: 40px;
   }
 
-  /* Increase Arrow Size Inside Buttons */
+  /* Increase Arrow Size */
   .next-page-button::after,
   .back-page-button::after {
-    font-size: 1.8em; /* Increase arrow size */
-    color: #fff; /* Ensure arrows are visible */
+    font-size: 2em; /* Increase arrow size */
+    color: #fff;
   }
 
-  /* Position the Next and Back Buttons Closer to Edges */
+  /* Position Buttons Closer to Screen Edges */
   .next-page-button {
     right: 10px;
   }
@@ -415,6 +408,7 @@
     left: 10px;
   }
 }
+
   </style>
 </head>
 <body>
