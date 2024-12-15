@@ -161,40 +161,45 @@
     position: fixed;
     top: 0;
     right: 0;
-    left: 0; /* Make navigation bar span full width */
     display: flex;
-    flex-wrap: wrap; /* Allow links to wrap to the next line if needed */
-    padding: 15px; /* Increase padding for easier touch */
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
-    justify-content: center; /* Center the navigation links */
+    flex-wrap: nowrap;
+    padding: 10px 15px;
+    justify-content: flex-end;
+    max-width: 300px;
+    width: auto;
   }
 
   .navigation-bar a {
-    margin: 10px; /* Increase margin for better spacing */
-    font-size: 1.2em; /* Increase font size for readability */
-    padding: 10px 15px; /* Increase padding for touch targets */
-    /* Optional: Make navigation links block-level for easier tapping */
-    display: block;
+    margin: 0 5px; /* Reduce margin for tighter spacing */
+    font-size: 1em; /* Adjust font size for better fit */
+    padding: 8px 10px; /* Reduce padding for smaller touch targets */
+    display: inline-block;
   }
 
   /* 2. Adjust Carousel Container */
   #carousel-container {
     width: 100%; /* Make containers full width on mobile */
-    height: auto; /* Allow height to adjust based on content */
+    height: 100vh; /* Maintain full viewport height */
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 0; /* Remove negative margin if causing layout issues */
+    opacity: 1; /* Ensure carousel is visible */
+    transition: opacity 0.5s ease-in-out;
   }
 
-  /* 3. Increase Icon Sizes */
-  #bottom-right-image,
-  #bottom-left-image {
-    width: 80px; /* Increase width from 125px to 80px on mobile */
-    /* Optional: Adjust height if necessary or keep it auto */
+  /* 3. Ensure Carousel Renderer Fits Mobile Screen */
+  #carousel-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
   }
 
-  /* 4. Adjust Tooltip Font Size */
-  .tooltip {
-    font-size: 1em; /* Increase tooltip font size for better readability */
-    padding: 10px 14px; /* Increase padding for touch accuracy */
+  /* 4. Adjust Video Background */
+  #background-video {
+    object-fit: cover;
   }
 
   /* 5. Optimize Bottom Images Positioning */
@@ -208,11 +213,25 @@
     left: 20px;    /* Adjust left positioning */
   }
 
-  /* 6. Ensure Carousel Renderer Fits Mobile Screen */
-  #carousel-container canvas {
-    width: 100% !important;
-    height: auto !important;
+  /* 6. Increase Icon Sizes */
+  #bottom-right-image,
+  #bottom-left-image {
+    width: 80px; /* Adjusted width for mobile */
+    height: auto;
   }
+
+  /* 7. Remove Tooltips on Mobile */
+  .tooltip {
+    display: none;
+  }
+
+  /* 8. Optional: Hide Certain Elements on Mobile */
+  /* If certain elements are too bulky for mobile, consider hiding them */
+  /* Example:
+  #model-container {
+    display: none;
+  }
+  */
 }
   </style>
 </head>
