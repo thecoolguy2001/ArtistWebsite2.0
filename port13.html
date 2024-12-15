@@ -347,23 +347,40 @@
         height: 300px; /* Set a fixed height or adjust as needed */
       }
 
-      /* Optional: Adjust Text Alignment */
       .text-container {
-        text-align: center; /* Center text for better readability */
-      }
-       /* 11. Reduce Font Sizes for Art Containers */
-  .art-title {
-    font-size: 2.5em; /* Reduced from 4em to 2.5em */
+    text-align: center; /* Ensure text is centered */
+    margin: 0 auto; /* Center the container horizontally */
+    width: 90%; /* Ensure it takes a reasonable width */
   }
 
-  .art-details p {
-    font-size: 1em; /* Reduced from 1.2em to 1em */
-  }
-
+  /* Adjust spacing for art details */
+  .art-details p,
   .art-description p {
-    font-size: 1.2em; /* Reduced from 1.5em to 1.2em */
+    margin-bottom: 0.5em; /* Reduce vertical spacing between details */
   }
-    }
+
+  .art-title {
+    font-size: 2em; /* Smaller font size for mobile */
+    margin-bottom: 0.5em; /* Adjust spacing under the title */
+  }
+
+  /* Adjust navigation buttons for mobile */
+  .next-page-button,
+  .back-page-button {
+    font-size: 1.5em; /* Reduce size of the arrow icons */
+    padding: 8px 12px; /* Smaller padding for buttons */
+    width: 40px; /* Reduce button size */
+    height: 40px; /* Maintain square shape */
+  }
+
+  .next-page-button {
+    right: 10px; /* Bring button closer to the edge */
+  }
+
+  .back-page-button {
+    left: 10px; /* Bring button closer to the edge */
+  }
+}
   </style>
 </head>
 <body>
