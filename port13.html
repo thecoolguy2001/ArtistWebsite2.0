@@ -347,11 +347,7 @@
         height: 300px; /* Set a fixed height or adjust as needed */
       }
 
-      .text-container {
-    text-align: center; /* Ensure text is centered */
-    margin: 0 auto; /* Center the container horizontally */
-    width: 90%; /* Ensure it takes a reasonable width */
-  }
+    
 
   /* Adjust spacing for art details */
   .art-details p,
@@ -363,22 +359,45 @@
     font-size: 2em; /* Smaller font size for mobile */
     margin-bottom: 0.5em; /* Adjust spacing under the title */
   }
+  .text-container {
+    width: 90%; /* Take most of the screen width */
+    margin: 0 auto; /* Center horizontally */
+    text-align: center; /* Center text content */
+    position: relative;
+    padding: 10px 0; /* Add slight padding for spacing */
+  }
 
-  /* Adjust navigation buttons for mobile */
+  /* Center the Shopify Button */
+  #product-component-1733950072571 {
+    margin: 10px auto; /* Center the button horizontally */
+    text-align: center;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+  }
+
+  /* Make Next and Back Buttons Smaller */
   .next-page-button,
   .back-page-button {
-    font-size: 1.5em; /* Reduce size of the arrow icons */
-    padding: 8px 12px; /* Smaller padding for buttons */
-    width: 40px; /* Reduce button size */
-    height: 40px; /* Maintain square shape */
+    font-size: 1.2em; /* Reduce button size */
+    padding: 8px; /* Adjust padding for smaller touch area */
+    width: 35px; /* Slightly smaller button */
+    height: 35px;
   }
 
+  /* Increase Arrow Size Inside Buttons */
+  .next-page-button::after,
+  .back-page-button::after {
+    font-size: 1.8em; /* Increase arrow size */
+    color: #fff; /* Ensure arrows are visible */
+  }
+
+  /* Position the Next and Back Buttons Closer to Edges */
   .next-page-button {
-    right: 10px; /* Bring button closer to the edge */
+    right: 10px;
   }
 
   .back-page-button {
-    left: 10px; /* Bring button closer to the edge */
+    left: 10px;
   }
 }
   </style>
