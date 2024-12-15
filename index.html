@@ -526,7 +526,7 @@ const createCarousel = (modelPaths, numItems, radius) => {
           object.userData.url = 'port6.html';
         }
         // Add a clickable plane behind the model
-    const padding = 100; // Increase tap area
+    const padding = 500; // Increase tap area
     const clickablePlane = new THREE.Mesh(
       new THREE.PlaneGeometry(size.x + padding, size.y + padding),
       new THREE.MeshBasicMaterial({ visible: false }) // Invisible plane
