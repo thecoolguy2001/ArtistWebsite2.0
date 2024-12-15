@@ -162,13 +162,11 @@
     top: 0;
     right: 0;
     left: 0; /* Make navigation bar span full width */
-    padding: 15px; /* Increase padding for easier touch */
     display: flex;
    flex-wrap: wrap; /* Allow links to wrap to the next line if needed */
   }
 
   .navigation-bar a {
-    margin: 10px; /* Increase margin for better spacing */
     font-size: 1.2em; /* Increase font size for readability */
     padding: 10px 15px; /* Increase padding for touch targets */
   }
@@ -870,80 +868,161 @@ function hideTooltipCD() {
     })();
   </script>
   <script>
-  (function() {
-    // Define the playlist array with your audio file paths
-    const playlist = [
-      'song1.mp3',
-      'song2.mp3',
-      'song3.mp3'
-      // Add more songs as needed
-    ];
-  
-    // Initialize the current track index
-    let currentTrackIndex = 0;
-  
-    // Create the Audio object without setting the source initially
-    const radioAudio = new Audio();
-    radioAudio.src = playlist[currentTrackIndex];
-    radioAudio.loop = false; // No looping individual tracks
-    radioAudio.autoplay = false; // User interaction required to play
-  
-    // Event listener for when a track ends
-    radioAudio.addEventListener('ended', function() {
-      // Select a random track index
-      let nextTrackIndex = Math.floor(Math.random() * playlist.length);
-      
-      // Optional: Prevent the same track from playing consecutively
-      if (playlist.length > 1) { // Ensure there are at least two tracks
-        while (nextTrackIndex === currentTrackIndex) {
-          nextTrackIndex = Math.floor(Math.random() * playlist.length);
+    (function() {
+      // Define the playlist array with your audio file paths
+      const playlist = [
+        'song1.mp3',
+        'song2.mp3',
+        'song3.mp3'
+        // Add more songs as needed
+      ];
+    
+      // Initialize the current track index
+      let currentTrackIndex = 0;
+    
+      // Create the Audio object without setting the source initially
+      const radioAudio = new Audio();
+      radioAudio.src = playlist[currentTrackIndex];
+      radioAudio.loop = false; // No looping individual tracks
+      radioAudio.autoplay = false; // User interaction required to play
+    
+      // Event listener for when a track ends
+      radioAudio.addEventListener('ended', function() {
+        // Select a random track index
+        let nextTrackIndex = Math.floor(Math.random() * playlist.length);
+        
+        // Optional: Prevent the same track from playing consecutively
+        if (playlist.length > 1) { // Ensure there are at least two tracks
+          while (nextTrackIndex === currentTrackIndex) {
+            nextTrackIndex = Math.floor(Math.random() * playlist.length);
+          }
+        }
+        
+        currentTrackIndex = nextTrackIndex; // Update the current track index
+        radioAudio.src = playlist[currentTrackIndex];
+        radioAudio.play().catch(err => {
+          console.error('Error playing next track:', err);
+        });
+      });
+    
+      // Get the CD image and tooltip elements
+      const cdImage = document.getElementById('bottom-right-image');
+      const cdTooltip = document.getElementById('cd-tooltip');
+    
+      if (!cdImage || !cdTooltip) {
+        console.error('CD image or tooltip element not found.');
+        return;
+      }
+    
+      // Function to toggle radio (playlist) playback
+      function toggleRadio() {
+        if (radioAudio.paused) {
+          radioAudio.play().then(() => {
+            cdImage.src = 'cd.gif'; // Spinning CD animation
+            cdImage.alt = 'Radio On';
+            cdTooltip.textContent = 'Radio On';
+            cdImage.classList.add('active'); // Add the 'active' class
+          }).catch(err => {
+            console.error('Playlist play error:', err);
+          });
+        } else {
+          radioAudio.pause();
+          cdImage.src = 'cd.png';
+          cdImage.alt = 'Radio Off';
+          cdTooltip.textContent = 'Radio Off';
+          cdImage.classList.remove('active'); // Remove the 'active' class
         }
       }
-      
-      currentTrackIndex = nextTrackIndex; // Update the current track index
-      radioAudio.src = playlist[currentTrackIndex];
-      radioAudio.play().catch(err => {
-        console.error('Error playing next track:', err);
+  
+      // Attach click event listener to the CD image
+      cdImage.addEventListener('click', toggleRadio);
+    
+      // Optional: Initialize tooltip content based on initial state
+      window.addEventListener('DOMContentLoaded', (event) => {
+        cdTooltip.textContent = radioAudio.paused ? 'Radio Off' : 'Radio On';
       });
-    });
   
-    // Get the CD image and tooltip elements
-    const cdImage = document.getElementById('bottom-right-image');
-    const cdTooltip = document.getElementById('cd-tooltip');
+      /*************************************
+       * TOUCH CONTROLS FOR CAROUSEL
+       *************************************/
+    
+      // Access carouselRenderer and carouselGroup from the main carousel script
+      // Ensure this script runs after the carousel script or place it within the same script
+    
+      // Variables to track touch interactions
+      let touchStartX = 0;
+      let touchEndX = 0;
+      let touchStartY = 0;
+      let touchEndY = 0;
+      const swipeThreshold = 50; // Minimum swipe distance in pixels to consider as a swipe
+      let isTap = true;
+      const tapThreshold = 10; // Maximum movement in pixels to consider as a tap
   
-    if (!cdImage || !cdTooltip) {
-      console.error('CD image or tooltip element not found.');
-      return;
-    }
+      // Assuming carouselRenderer and carouselGroup are globally accessible
+      // If not, you need to expose them or integrate this code within the carousel script
   
-    // Function to toggle radio (playlist) playback
-    function toggleRadio() {
-      if (radioAudio.paused) {
-        radioAudio.play().then(() => {
-          cdImage.src = 'cd.gif'; // Spinning CD animation
-          cdImage.alt = 'Radio On';
-          cdTooltip.textContent = 'Radio On';
-          cdImage.classList.add('active'); // Add the 'active' class
-        }).catch(err => {
-          console.error('Playlist play error:', err);
-        });
-      } else {
-        radioAudio.pause();
-        cdImage.src = 'cd.png';
-        cdImage.alt = 'Radio Off';
-        cdTooltip.textContent = 'Radio Off';
-        cdImage.classList.remove('active'); // Remove the 'active' class
+      // Add touch event listeners to the carousel renderer's DOM element
+      carouselRenderer.domElement.addEventListener('touchstart', onTouchStart, false);
+      carouselRenderer.domElement.addEventListener('touchmove', onTouchMove, false);
+      carouselRenderer.domElement.addEventListener('touchend', onTouchEnd, false);
+  
+      // Prevent default touch behavior to avoid scrolling when interacting with the carousel
+      carouselRenderer.domElement.addEventListener('touchmove', function(event) {
+        event.preventDefault();
+      }, { passive: false });
+  
+      function onTouchStart(event) {
+        if (event.touches.length === 1) { // Only consider single touch
+          touchStartX = event.touches[0].clientX;
+          touchStartY = event.touches[0].clientY;
+          isTap = true;
+        }
       }
-    }
-
-    // Attach click event listener to the CD image
-    cdImage.addEventListener('click', toggleRadio);
-
-    // Optional: Initialize tooltip content based on initial state
-    window.addEventListener('DOMContentLoaded', (event) => {
-      cdTooltip.textContent = radioAudio.paused ? 'Radio Off' : 'Radio On';
-    });
-  })();
-</script>
+  
+      function onTouchMove(event) {
+        if (event.touches.length === 1) { // Only consider single touch
+          touchEndX = event.touches[0].clientX;
+          touchEndY = event.touches[0].clientY;
+          const moveX = Math.abs(touchEndX - touchStartX);
+          const moveY = Math.abs(touchEndY - touchStartY);
+          if (moveX > tapThreshold || moveY > tapThreshold) {
+            isTap = false;
+          }
+        }
+      }
+  
+      function onTouchEnd(event) {
+        const swipeDistance = touchEndX - touchStartX;
+  
+        if (!isTap) { // It's a swipe
+          if (Math.abs(swipeDistance) > swipeThreshold) {
+            if (swipeDistance < 0) {
+              // Swiped left - rotate carousel to the right
+              carouselTargetAngle -= Math.PI / 4; // Adjust the rotation angle as needed
+            } else {
+              // Swiped right - rotate carousel to the left
+              carouselTargetAngle += Math.PI / 4; // Adjust the rotation angle as needed
+            }
+          }
+        } else { // It's a tap
+          // Manually trigger the click event
+          const clickEvent = new MouseEvent('click', {
+            view: window,
+            bubbles: true,
+            cancelable: true
+          });
+          carouselRenderer.domElement.dispatchEvent(clickEvent);
+        }
+  
+        // Reset touch positions
+        touchStartX = 0;
+        touchEndX = 0;
+        touchStartY = 0;
+        touchEndY = 0;
+        isTap = true;
+      }
+  
+    })();
+  </script>
 </body>
 </html>
