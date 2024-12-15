@@ -190,93 +190,108 @@
    width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
 }
 /* Mobile Styles */
+/* Mobile Styles */
 @media (max-width: 768px) {
-  /* 1. Adjust Navigation Bar */
-  .navigation-bar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    display: flex;
-    flex-wrap: nowrap;
-    padding: 10px 10px;
-    justify-content: flex-end;
-    max-width: 300px;
-    width: auto;
-  }
+      /* 1. Adjust Navigation Bar */
+      .navigation-bar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        display: flex;
+        flex-wrap: nowrap;
+        padding: 10px 10px;
+        justify-content: flex-end;
+        max-width: 300px;
+        width: auto;
+      }
 
-  .navigation-bar a {
-    margin: 0 -2px; /* Reduce margin for tighter spacing */
-    font-size: 1em; /* Adjust font size for better fit */
-    padding: 8px 10px; /* Reduce padding for smaller touch targets */
-    display: inline-block;
-  }
+      .navigation-bar a {
+        margin: 0 -2px; /* Reduce margin for tighter spacing */
+        font-size: 1em; /* Adjust font size for better fit */
+        padding: 8px 10px; /* Reduce padding for smaller touch targets */
+        display: inline-block;
+      }
 
-  
-  
-  /* 4. Adjust Video Background */
-  #background-video {
-    object-fit: cover;
-  }
+      /* 2. Adjust Carousel Container */
+      #carousel-container {
+        width: 100%; /* Make containers full width on mobile */
+        height: 100vh; /* Maintain full viewport height */
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0; /* Remove negative margin if causing layout issues */
+        opacity: 0; /* Start with invisible carousel */
+        transition: opacity 0.5s ease-in-out;
+      }
 
-  /* 5. Optimize Bottom Images Positioning */
-  #bottom-right-image {
-    bottom: 20px; /* Adjust bottom positioning */
-    right: 20px;  /* Adjust right positioning */
-  }
-  #bottom-right-image.active {
-  width: 110px; /* Increased width from 125px to 150px */
-  bottom: -4px;
-  right: -2px;  /* Reduced bottom padding from 10px to 5px */
-  transition: width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
-}
+      /* 3. Ensure Carousel Renderer Fits Mobile Screen */
+      #carousel-container canvas {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
+        pointer-events: auto; /* Ensure it can receive pointer events */
+      }
 
-  #bottom-left-image {
-    bottom: 20px; /* Adjust bottom positioning */
-    left: 20px;    /* Adjust left positioning */
-  }
+      /* 4. Adjust Video Background */
+      #background-video {
+        object-fit: cover;
+      }
 
-  /* 6. Increase Icon Sizes */
-  #bottom-right-image,
-  #bottom-left-image {
-    width: 80px; /* Adjusted width for mobile */
-    height: auto;
-  }
+      /* 5. Optimize Bottom Images Positioning */
+      #bottom-right-image {
+        bottom: 20px; /* Adjust bottom positioning */
+        right: 20px;  /* Adjust right positioning */
+      }
 
-  /* 7. Remove Tooltips on Mobile */
-  .tooltip {
-    display: none;
-    .profile-container {
-    flex-direction: column; /* Stack children vertically */
-    align-items: center;    /* Center items horizontally */
-    justify-content: flex-start; /* Align items to the top */
-  }
+      #bottom-right-image.active {
+        width: 110px; /* Adjusted width for mobile */
+        bottom: -4px;
+        right: -2px;  /* Reduced bottom padding from 10px to 5px */
+        transition: width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
+      }
 
-  /* 10. Adjust 3D Container and Text Container */
-  #container3D, .text-container {
-    width: 90%; /* Make containers almost full width */
-    margin: 10px 0; /* Add vertical spacing */
-  }
+      #bottom-left-image {
+        bottom: 20px; /* Adjust bottom positioning */
+        left: 20px;    /* Adjust left positioning */
+      }
 
-  /* Optional: Adjust Heights if Necessary */
-  #container3D {
-    height: 300px; /* Set a fixed height or adjust as needed */
-  }
+      /* 6. Increase Icon Sizes */
+      #bottom-right-image,
+      #bottom-left-image {
+        width: 80px; /* Adjusted width for mobile */
+        height: auto;
+      }
 
-  /* Optional: Adjust Text Alignment */
-  .text-container {
-    text-align: center; /* Center text for better readability */
-  }
+      /* 7. Remove Tooltips on Mobile */
+      .tooltip {
+        display: none;
+      }
 
-  }
+      /* 9. Adjust Profile Container for Mobile */
+      .profile-container {
+        flex-direction: column; /* Stack children vertically */
+        align-items: center;    /* Center items horizontally */
+        justify-content: flex-start; /* Align items to the top */
+      }
 
-  /* 8. Optional: Hide Certain Elements on Mobile */
-  /* If certain elements are too bulky for mobile, consider hiding them */
-  /* Example:
-  #model-container {
-    display: none;
-  }
-  */
-}
+      /* 10. Adjust 3D Container and Text Container */
+      #container3D, .text-container {
+        width: 90%; /* Make containers almost full width */
+        margin: 10px 0; /* Add vertical spacing */
+      }
+
+      /* Optional: Adjust Heights if Necessary */
+      #container3D {
+        height: 300px; /* Set a fixed height or adjust as needed */
+      }
+
+      /* Optional: Adjust Text Alignment */
+      .text-container {
+        text-align: center; /* Center text for better readability */
+      }
+    }
   </style>
 </head>
 <body>
