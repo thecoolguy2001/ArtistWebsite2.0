@@ -4,13 +4,14 @@
   <title>Deshaun Walker</title>
   <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <!-- Include Three.js and GLTFLoader -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/build/three.min.js"></script>
   <!-- Corrected GLTFLoader script tag -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/examples/js/loaders/GLTFLoader.js"></script>
-
-  <style>
+  
+   <style>
     html, body {
       height: 100%;
       margin: 0;
@@ -152,6 +153,73 @@
   bottom: -35px;
   right: -15px;  /* Reduced bottom padding from 10px to 5px */
   transition: width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
+}
+/* Mobile Styles */
+@media (max-width: 768px) {
+  /* 1. Adjust Navigation Bar */
+  .navigation-bar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0; /* Make navigation bar span full width */
+    padding: 15px; /* Increase padding for easier touch */
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+    display: flex;
+    justify-content: center; /* Center the navigation links */
+    flex-wrap: wrap; /* Allow links to wrap to the next line if needed */
+  }
+
+  .navigation-bar a {
+    margin: 10px; /* Increase margin for better spacing */
+    font-size: 1.2em; /* Increase font size for readability */
+    padding: 10px 15px; /* Increase padding for touch targets */
+  }
+
+  /* 2. Increase Icon Sizes */
+  #bottom-right-image,
+  #bottom-left-image {
+    width: 80px; /* Increase width from 125px to 80px on mobile */
+    /* Optional: Adjust height if necessary or keep it auto */
+  }
+
+  /* 3. Adjust Tooltip Font Size */
+  .tooltip {
+    font-size: 1em; /* Increase tooltip font size for better readability */
+    padding: 10px 14px; /* Increase padding for touch accuracy */
+  }
+
+  /* 4. Adjust Carousel and Model Containers */
+  #carousel-container,
+  #model-container {
+    width: 100%; /* Make containers full width on mobile */
+    height: auto; /* Allow height to adjust based on content */
+    margin-top: 0; /* Remove negative margin if causing layout issues */
+  }
+
+  /* 5. Adjust Video Background */
+  #background-video {
+    object-fit: cover;
+    /* Ensure the video covers the background without distortion */
+  }
+
+  /* 6. Optimize Bottom Images Positioning */
+  #bottom-right-image {
+    bottom: 20px; /* Adjust bottom positioning */
+    right: 20px;  /* Adjust right positioning */
+  }
+
+  #bottom-left-image {
+    bottom: 20px; /* Adjust bottom positioning */
+    left: 20px;    /* Adjust left positioning */
+  }
+
+  /* 7. Optional: Hide Certain Elements on Mobile */
+  /* If certain elements are too bulky for mobile, consider hiding them */
+  /* Example:
+  #model-container {
+    display: none;
+  }
+  */
 }
   </style>
 </head>
