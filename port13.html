@@ -331,81 +331,80 @@
   /* Center the Profile Container */
   .profile-container {
     display: flex;
-    flex-direction: column; /* Stack children vertically */
+    flex-direction: column; /* Stack content vertically */
     align-items: center;    /* Center horizontally */
     justify-content: center; /* Center vertically */
+    text-align: center; /* Center align text inside children */
     width: 100%;
     height: auto;
-    margin: 0 auto; /* Center within the page */
-    text-align: center;
+    margin: 0 auto; /* Center horizontally on the page */
   }
 
   /* Center the 3D Model Container */
   #container3D {
     width: 100%; /* Full width */
-    height: 300px; /* Set a fixed height */
-    margin: 0 auto; /* Center the container horizontally */
+    height: 300px; /* Fixed height */
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    margin: 0 auto; /* Center horizontally */
   }
 
   /* Center the Text Container */
   .text-container {
-    width: 90%; /* Adjust width for responsiveness */
-    margin: 10px auto; /* Center horizontally with vertical spacing */
-    padding: 10px 0; /* Add slight padding */
-    text-align: center; /* Center the content */
+    width: 90%; /* Adjust width for mobile view */
+    margin: 10px auto; /* Center horizontally */
+    padding: 0; /* Reset any extra padding */
+    text-align: center; /* Center the text content */
     display: flex;
     flex-direction: column; /* Stack content vertically */
-    align-items: center; /* Center all elements horizontally */
-    justify-content: center; /* Center content vertically */
+    align-items: center; /* Ensure all children are horizontally centered */
+    justify-content: center; /* Vertically center if needed */
+    position: relative;
+    right: 0; /* Reset any offset to the left */
   }
 
   /* Reduce Font Sizes for Mobile */
   .art-title {
-    font-size: 2em; /* Smaller font size */
+    font-size: 2.5em; /* Smaller font size for better fit */
     margin-bottom: 0.5em;
   }
 
   .art-details p,
   .art-description p {
-    font-size: 1em; /* Adjust details font size */
-    margin-bottom: 0.5em; /* Reduce spacing */
+    font-size: 1em; /* Smaller font for details */
+    margin-bottom: 0.5em; /* Reduce vertical spacing */
   }
 
-  /* Adjust Shopify Buy Button */
+  /* Center and Adjust Shopify Buy Button */
   #product-component-1733950072571 {
-    margin: 10px auto; /* Center horizontally */
+    margin: 15px auto; /* Center horizontally */
     display: flex;
     justify-content: center; /* Center button content */
-    align-items: center;
-    width: 90%; /* Make button span most of the screen */
+    align-items: center; /* Align vertically */
+    width: 80%; /* Slightly smaller width to avoid full stretch */
   }
 
-  /* Make Next and Back Buttons Smaller */
+  /* Adjust Next and Back Buttons */
   .next-page-button,
   .back-page-button {
-    font-size: 1.5em; /* Reduce button size */
+    font-size: 1.5em; /* Adjust button size */
     padding: 10px; /* Adjust padding */
-    width: 40px; /* Slightly smaller width */
+    width: 40px;
     height: 40px;
   }
 
-  /* Increase Arrow Size */
   .next-page-button::after,
   .back-page-button::after {
-    font-size: 2em; /* Increase arrow size */
-    color: #fff;
+    font-size: 2em; /* Larger arrow icons */
   }
 
-  /* Position Buttons Closer to Screen Edges */
   .next-page-button {
-    right: 10px;
+    right: 15px;
   }
 
   .back-page-button {
-    left: 10px;
+    left: 15px;
   }
 }
 
