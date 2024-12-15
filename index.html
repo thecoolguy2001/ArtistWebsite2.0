@@ -163,10 +163,8 @@
     right: 0;
     left: 0; /* Make navigation bar span full width */
     padding: 15px; /* Increase padding for easier touch */
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
     display: flex;
-    justify-content: center; /* Center the navigation links */
-    flex-wrap: wrap; /* Allow links to wrap to the next line if needed */
+   flex-wrap: wrap; /* Allow links to wrap to the next line if needed */
   }
 
   .navigation-bar a {
@@ -182,19 +180,10 @@
     /* Optional: Adjust height if necessary or keep it auto */
   }
 
-  /* 3. Adjust Tooltip Font Size */
-  .tooltip {
-    font-size: 1em; /* Increase tooltip font size for better readability */
-    padding: 10px 14px; /* Increase padding for touch accuracy */
-  }
+  
 
   /* 4. Adjust Carousel and Model Containers */
-  #carousel-container,
-  #model-container {
-    width: 100%; /* Make containers full width on mobile */
-    height: auto; /* Allow height to adjust based on content */
-    margin-top: 0; /* Remove negative margin if causing layout issues */
-  }
+  
 
   /* 5. Adjust Video Background */
   #background-video {
@@ -224,7 +213,7 @@
   </style>
 </head>
 <body>
-  <video autoplay muted loop id="background-video">
+  <video autoplay muted loop playsinline id="background-video">
     <source src="video3.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
