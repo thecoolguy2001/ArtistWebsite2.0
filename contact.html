@@ -227,53 +227,35 @@
   .tooltip {
     display: none;
   }
-  .contact-form {
-    width: 90%; /* Set the form to occupy 90% of the viewport width */
-    margin: 20px auto; /* Center the form and add vertical spacing */
-    padding: 10px; /* Optional: Add padding for better spacing */
-    box-sizing: border-box; /* Ensure padding doesn't affect overall width */
-  }
-
-  /* 13. Adjust Form Elements for Mobile */
-  .contact-form input[type='text'],
-  .contact-form textarea {
-    width: 100%; /* Ensure inputs take full width of the container */
-    padding: 0.5em; /* Adjust padding for better touch targets */
-    margin-bottom: 1em; /* Maintain spacing between fields */
-    border: 1px solid #ccc; /* Retain border styling */
-    border-radius: 4px; /* Retain border-radius for consistency */
-    font-size: 1em; /* Adjust font size for readability */
-  }
-
-  .contact-form input[type='submit'] {
-    width: 100%; /* Ensure the submit button takes full width */
-    padding: 1em; /* Increase padding for easier tapping */
-    border: none; /* Remove border for a cleaner look */
-    background-color: #4CAF50; /* Retain background color */
-    color: white; /* Retain text color */
-    cursor: pointer; /* Retain cursor style */
-    border-radius: 4px; /* Retain border-radius */
-    font-size: 1em; /* Adjust font size for readability */
-  }
-
-  .contact-form input[type='submit']:hover {
-    background-color: #388E3C; /* Retain hover effect */
-  }
-
-  /* 14. Optional: Adjust Header Font Size */
   .contact-header h2 {
-    font-size: 1.8em; /* Reduce font size for mobile */
-    margin-top: 0.5em; /* Adjust top margin if necessary */
-    margin-bottom: 1em; /* Adjust bottom margin if necessary */
+    font-size: 1.5em; /* Smaller header font size */
+    margin-top: 1em; /* Adjust top margin for spacing */
+    margin-bottom: 1em; /* Adjust bottom margin for spacing */
   }
 
-  /* 8. Optional: Hide Certain Elements on Mobile */
-  /* If certain elements are too bulky for mobile, consider hiding them */
-  /* Example:
-  #model-container {
-    display: none;
+  /* Make all input fields and textarea the same smaller size */
+  .contact-form input[type='text'],
+  .contact-form textarea,
+  .contact-form input[type='submit'] {
+    font-size: 0.9em; /* Smaller font size for form elements */
+    width: 100%; /* Ensure they take full width */
+    padding: 0.5em; /* Adjust padding for touch-friendly size */
+    margin-bottom: 1em; /* Maintain uniform spacing */
+    box-sizing: border-box; /* Include padding in element width */
   }
-  */
+
+  /* Optional: Adjust the form container for better layout */
+  .contact-form {
+    width: 90%; /* Keep the form width manageable on mobile */
+    margin: 10px auto; /* Center and add some vertical spacing */
+    padding: 10px; /* Internal spacing for better readability */
+  }
+
+  /* Optional: Reduce submit button padding */
+  .contact-form input[type='submit'] {
+    padding: 0.8em; /* Slightly smaller button padding */
+    font-size: 1em; /* Adjust button text size */
+  }
 }
   </style>
 </head>
