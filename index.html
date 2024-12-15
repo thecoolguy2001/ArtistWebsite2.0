@@ -990,7 +990,7 @@ function hideTooltipCD() {
         cdTooltip.textContent = radioAudio.paused ? 'Radio Off' : 'Radio On';
       });
   
-      /*************************************
+  /*************************************
  * POINTER EVENTS FOR CAROUSEL
  *************************************/
 
@@ -1011,50 +1011,76 @@ carouselRenderer.domElement.addEventListener('pointerup', onPointerUp, false);
 // Prevent default touch actions to avoid scrolling when interacting with the carousel
 carouselRenderer.domElement.style.touchAction = 'none';
 
+// Pointer Down: Capture starting positions and reset states
 function onPointerDown(event) {
   if (event.pointerType === 'touch' || event.pointerType === 'mouse') {
     pointerStartX = event.clientX;
     pointerStartY = event.clientY;
-    isTap = true;
+    pointerEndX = pointerStartX;
+    pointerEndY = pointerStartY;
+    isTap = true; // Assume it's a tap until movement exceeds threshold
   }
 }
 
+// Pointer Move: Track movement and determine if it's a tap or swipe
 function onPointerMove(event) {
   if (event.pointerType === 'touch' || event.pointerType === 'mouse') {
     pointerEndX = event.clientX;
     pointerEndY = event.clientY;
     const moveX = Math.abs(pointerEndX - pointerStartX);
     const moveY = Math.abs(pointerEndY - pointerStartY);
+
+    // If movement exceeds the tap threshold, it's no longer considered a tap
     if (moveX > tapThreshold || moveY > tapThreshold) {
       isTap = false;
     }
   }
 }
 
+// Pointer Up: Determine whether the interaction is a swipe or tap
 function onPointerUp(event) {
-  const swipeDistance = pointerEndX - pointerStartX;
+  const swipeDistanceX = pointerEndX - pointerStartX;
+  const swipeDistanceY = pointerEndY - pointerStartY;
 
-  if (!isTap) { // It's a swipe
-    if (Math.abs(swipeDistance) > swipeThreshold) {
-      if (swipeDistance < 0) {
-        // Swiped left - rotate carousel to the right
+  if (!isTap) {
+    // It's a swipe interaction
+    if (Math.abs(swipeDistanceX) > swipeThreshold && Math.abs(swipeDistanceY) < swipeThreshold) {
+      // Horizontal swipe detected
+      if (swipeDistanceX < 0) {
+        // Swiped left: Rotate carousel to the right
         carouselTargetAngle -= Math.PI / 4; // Adjust the rotation angle as needed
       } else {
-        // Swiped right - rotate carousel to the left
+        // Swiped right: Rotate carousel to the left
         carouselTargetAngle += Math.PI / 4; // Adjust the rotation angle as needed
       }
     }
-  } else { // It's a tap
-    // Manually trigger the click event
-    const clickEvent = new MouseEvent('click', {
-      view: window,
-      bubbles: true,
-      cancelable: true
-    });
-    carouselRenderer.domElement.dispatchEvent(clickEvent);
+  } else {
+    // It's a tap interaction
+    const rect = carouselRenderer.domElement.getBoundingClientRect();
+    const normalizedMouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    const normalizedMouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    // Simulate a mouse click using raycaster
+    raycasterCarousel.setFromCamera({ x: normalizedMouseX, y: normalizedMouseY }, carouselCamera);
+    const intersects = raycasterCarousel.intersectObjects(carouselGroup.children, true);
+
+    if (intersects.length > 0) {
+      const clickedObject = intersects[0].object;
+
+      // Traverse up to find the main model
+      let model = clickedObject;
+      while (model.parent && model.parent !== carouselGroup) {
+        model = model.parent;
+      }
+
+      if (model.userData.url) {
+        // Navigate to the associated URL
+        window.location.href = model.userData.url;
+      }
+    }
   }
 
-  // Reset pointer positions
+  // Reset variables for next interaction
   pointerStartX = 0;
   pointerEndX = 0;
   pointerStartY = 0;
