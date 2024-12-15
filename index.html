@@ -163,33 +163,41 @@
     right: 0;
     left: 0; /* Make navigation bar span full width */
     display: flex;
-   flex-wrap: wrap; /* Allow links to wrap to the next line if needed */
+    flex-wrap: wrap; /* Allow links to wrap to the next line if needed */
+    padding: 15px; /* Increase padding for easier touch */
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+    justify-content: center; /* Center the navigation links */
   }
 
   .navigation-bar a {
+    margin: 10px; /* Increase margin for better spacing */
     font-size: 1.2em; /* Increase font size for readability */
     padding: 10px 15px; /* Increase padding for touch targets */
+    /* Optional: Make navigation links block-level for easier tapping */
+    display: block;
   }
 
-  /* 2. Increase Icon Sizes */
+  /* 2. Adjust Carousel Container */
+  #carousel-container {
+    width: 100%; /* Make containers full width on mobile */
+    height: auto; /* Allow height to adjust based on content */
+    margin-top: 0; /* Remove negative margin if causing layout issues */
+  }
+
+  /* 3. Increase Icon Sizes */
   #bottom-right-image,
   #bottom-left-image {
     width: 80px; /* Increase width from 125px to 80px on mobile */
     /* Optional: Adjust height if necessary or keep it auto */
   }
 
-  
-
-  /* 4. Adjust Carousel and Model Containers */
-  
-
-  /* 5. Adjust Video Background */
-  #background-video {
-    object-fit: cover;
-    /* Ensure the video covers the background without distortion */
+  /* 4. Adjust Tooltip Font Size */
+  .tooltip {
+    font-size: 1em; /* Increase tooltip font size for better readability */
+    padding: 10px 14px; /* Increase padding for touch accuracy */
   }
 
-  /* 6. Optimize Bottom Images Positioning */
+  /* 5. Optimize Bottom Images Positioning */
   #bottom-right-image {
     bottom: 20px; /* Adjust bottom positioning */
     right: 20px;  /* Adjust right positioning */
@@ -200,13 +208,11 @@
     left: 20px;    /* Adjust left positioning */
   }
 
-  /* 7. Optional: Hide Certain Elements on Mobile */
-  /* If certain elements are too bulky for mobile, consider hiding them */
-  /* Example:
-  #model-container {
-    display: none;
+  /* 6. Ensure Carousel Renderer Fits Mobile Screen */
+  #carousel-container canvas {
+    width: 100% !important;
+    height: auto !important;
   }
-  */
 }
   </style>
 </head>
