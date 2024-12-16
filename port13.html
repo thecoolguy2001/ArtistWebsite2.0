@@ -343,7 +343,7 @@
   /* Center the 3D Model Container */
   #container3D {
     width: 100%; /* Full width */
-    height: 400px; /* Fixed height */
+    height: 300px; /* Fixed height */
     display: flex;
     justify-content: center; /* Center content horizontally */
     align-items: center; /* Center content vertically */
@@ -578,6 +578,22 @@
   <a href="port1.html" class="back-page-button" aria-label="Back Portfolio Page" title="Back">
     &#8592;
   </a>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Check if the user is on a mobile device
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+  
+      if (isMobile) {
+        // Find the Catalog link in the navigation bar
+        const catalogLink = document.querySelector(".navigation-bar a[href='newport.html']");
+  
+        // Change the href attribute to point to port13.html
+        if (catalogLink) {
+          catalogLink.setAttribute('href', 'port13.html');
+        }
+      }
+    });
+  </script>
   
   <!-- Include Three.js and modules via script tags -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/examples/js/controls/OrbitControls.js"></script>
