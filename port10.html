@@ -4,6 +4,7 @@
   <title>Deshaun Walker - About</title>
   <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Include Three.js and GLTFLoader -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/build/three.min.js"></script>
@@ -243,6 +244,165 @@
   right: -15px;  /* Reduced bottom padding from 10px to 5px */
   transition: width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
 }
+/* Mobile Styles */
+@media (max-width: 768px) {
+      /* 1. Adjust Navigation Bar */
+      .navigation-bar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        display: flex;
+        flex-wrap: nowrap;
+        padding: 10px 10px;
+        justify-content: flex-end;
+        max-width: 300px;
+        width: auto;
+      }
+
+      .navigation-bar a {
+        margin: 0 -2px; /* Reduce margin for tighter spacing */
+        font-size: 1em; /* Adjust font size for better fit */
+        padding: 8px 10px; /* Reduce padding for smaller touch targets */
+        display: inline-block;
+      }
+
+      /* 2. Adjust Carousel Container */
+      #carousel-container {
+        width: 100%; /* Make containers full width on mobile */
+        height: 100vh; /* Maintain full viewport height */
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0; /* Remove negative margin if causing layout issues */
+        opacity: 0; /* Start with invisible carousel */
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      /* 3. Ensure Carousel Renderer Fits Mobile Screen */
+      #carousel-container canvas {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
+        pointer-events: auto; /* Ensure it can receive pointer events */
+      }
+
+      /* 4. Adjust Video Background */
+      #background-video {
+        object-fit: cover;
+      }
+
+      /* 5. Optimize Bottom Images Positioning */
+      #bottom-right-image {
+        bottom: 20px; /* Adjust bottom positioning */
+        right: 20px;  /* Adjust right positioning */
+      }
+
+      #bottom-right-image.active {
+        width: 110px; /* Adjusted width for mobile */
+        bottom: -4px;
+        right: -2px;  /* Reduced bottom padding from 10px to 5px */
+        transition: width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
+      }
+
+      #bottom-left-image {
+        bottom: 20px; /* Adjust bottom positioning */
+        left: 20px;    /* Adjust left positioning */
+      }
+
+      /* 6. Increase Icon Sizes */
+      #bottom-right-image,
+      #bottom-left-image {
+        width: 80px; /* Adjusted width for mobile */
+        height: auto;
+      }
+
+      /* 7. Remove Tooltips on Mobile */
+      .tooltip {
+        display: none;
+      }
+  /* Center the Profile Container */
+  .profile-container {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center;    /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    text-align: center; /* Center align text inside children */
+    width: 100%;
+    height: auto;
+    margin: 0 auto; /* Center horizontally on the page */
+  }
+
+  /* Center the 3D Model Container */
+  #container3D {
+    width: 100%; /* Full width */
+    height: 300px; /* Fixed height */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    margin: 0 auto; /* Center horizontally */
+  }
+
+  /* Center the Text Container */
+  .text-container {
+    width: 90%; /* Adjust width for mobile view */
+    margin: 0px auto; /* Center horizontally */
+    padding: 0; /* Reset any extra padding */
+    text-align: center; /* Center the text content */
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Ensure all children are horizontally centered */
+    justify-content: center; /* Vertically center if needed */
+    position: relative;
+    right: 0; /* Reset any offset to the left */
+  }
+
+  /* Reduce Font Sizes for Mobile */
+  .art-title {
+    font-size: 2em; /* Smaller font size for better fit */
+    margin-bottom: 0em;
+  }
+
+  .art-details p,
+  .art-description p {
+    font-size: 1em; /* Smaller font for details */
+    margin-bottom: 0em; /* Reduce vertical spacing */
+  }
+
+  /* Center and Adjust Shopify Buy Button */
+  #product-component-1733950072571 {
+    margin: 10px auto; /* Center horizontally */
+    display: flex;
+    justify-content: center; /* Center button content */
+    align-items: center; /* Align vertically */
+    width: 80%; /* Slightly smaller width to avoid full stretch */
+  }
+
+  /* Adjust Next and Back Buttons */
+  .next-page-button,
+  .back-page-button {
+    font-size: 1em; /* Adjust button size */
+    padding: 10px; /* Adjust padding */
+    width: 20px;
+    height: 20px;
+  }
+
+  .next-page-button::after,
+  .back-page-button::after {
+    font-size: 2em; /* Larger arrow icons */
+  }
+
+  .next-page-button {
+    right: 15px;
+  }
+
+  .back-page-button {
+    left: 15px;
+  }
+}
+
+   
   </style>
 </head>
 <body>
@@ -415,6 +575,22 @@
   <a href="port11.html" class="back-page-button" aria-label="Back Portfolio Page" title="Back">
     &#8592;
   </a>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Check if the user is on a mobile device
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+  
+      if (isMobile) {
+        // Find the Catalog link in the navigation bar
+        const catalogLink = document.querySelector(".navigation-bar a[href='newport.html']");
+  
+        // Change the href attribute to point to port13.html
+        if (catalogLink) {
+          catalogLink.setAttribute('href', 'port13.html');
+        }
+      }
+    });
+  </script>
   <!-- Include Three.js and modules via script tags -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/examples/js/controls/OrbitControls.js"></script>
 
