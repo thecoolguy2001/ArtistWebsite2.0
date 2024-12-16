@@ -167,6 +167,7 @@
     justify-content: flex-end;
     max-width: 300px;
     width: auto;
+    z-index: 2;
   }
 
   .navigation-bar a {
@@ -193,6 +194,9 @@
   #carousel-container canvas {
     width: 100% !important;
     height: 100% !important;
+    position: absolute;
+    height: 100%;
+    z-index: 1; 
     display: block;
     pointer-events: auto;
     transition: opacity 0.5s ease-in-out;
@@ -226,6 +230,7 @@
   #bottom-left-image {
     width: 80px; /* Adjusted width for mobile */
     height: auto;
+    z-index: 2;
   }
 
   /* 7. Remove Tooltips on Mobile */
