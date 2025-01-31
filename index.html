@@ -250,7 +250,7 @@
 </head>
 <body>
   <video autoplay muted loop playsinline id="background-video">
-    <source src="video3.mp4" type="video/mp4">
+    <source src="video.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
       <div id="model-container"></div>
@@ -267,13 +267,7 @@
   <!-- Bottom Right Image -->
   <img id="bottom-right-image" src="cd.png" alt="Description">
 
-  <!-- Bottom Left Image -->
-<a href="https://badassfuckingkid.com" target="_blank" aria-label="BAFK.com" >
-  <img id="bottom-left-image" src="bafk.png" alt="BAFK.com">
-</a>
-
-<!-- Tooltip for BAFK.com Image -->
-<div id="nettspend-tooltip" class="tooltip">BAFK.com</div>
+  
 
 <!-- Tooltip for Logo -->
 <div id="logo-tooltip" class="tooltip">Home</div>
@@ -289,9 +283,9 @@
       // Find the Catalog link in the navigation bar
       const catalogLink = document.querySelector(".navigation-bar a[href='newport.html']");
 
-      // Change the href attribute to point to port13.html
+      // Change the href attribute to point to port12.html
       if (catalogLink) {
-        catalogLink.setAttribute('href', 'port13.html');
+        catalogLink.setAttribute('href', 'port12.html');
       }
     }
   });
@@ -467,14 +461,14 @@ carouselRenderer.domElement.addEventListener('mousemove', onCarouselMouseMove, f
 
     // Array of model paths to use in the carousel
     const models = [
-      'models/painting_reflection/scene.gltf', //Third
-      'models/painting_rejoicehewillprovide/scene.gltf', //Second
-      'netshirt 2.glb', //First
-      'models/painting_faith/scene.gltf', //Eigth
-      'models/painting_feelingbloom/scene.gltf', //Seventh
-      'models/painting_goodbye/scene.gltf', //Sixth
-      'models/painting_hell/scene.gltf', //Fifth
-      'models/painting_perseverance/scene.gltf',//Fourth
+      'models/painting_perseverance/scene.gltf', //Third
+      'models/painting_reflection/scene.gltf', //Second
+      'models/painting_rejoicehewillprovide/scene.gltf', //First
+      'models/painting_eternalyouth/scene.gltf', //Eigth
+      'models/painting_faith/scene.gltf', //Seventh
+      'models/painting_feelingbloom/scene.gltf', //Sixth
+      'models/painting_goodbye/scene.gltf', //Fifth
+      'models/painting_hell/scene.gltf',//Fourth
 
       // Add more model paths as needed
     ];
@@ -513,9 +507,7 @@ const createCarousel = (modelPaths, numItems, radius) => {
         object.position.z += z;
 
         // Assign URLs for models
-        if (modelPath.includes('tshirt')) {
-          object.userData.url = 'port13.html';
-        } else if (modelPath.includes('painting_rejoicehewillprovide')) {
+        if (modelPath.includes('painting_rejoicehewillprovide')) {
           object.userData.url = 'port12.html';
         } else if (modelPath.includes('painting_reflection')) {
           object.userData.url = 'port11.html';
@@ -529,6 +521,8 @@ const createCarousel = (modelPaths, numItems, radius) => {
           object.userData.url = 'port7.html';
         } else if (modelPath.includes('painting_faith')) {
           object.userData.url = 'port6.html';
+        } else if (modelPath.includes('painting_eternalyouth')) {
+          object.userData.url = 'port5.html';
         }
         // Add more models and URLs as needed
 
