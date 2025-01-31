@@ -306,6 +306,22 @@
 
 <!-- Tooltip for CD Image -->
 <div id="cd-tooltip" class="tooltip">Radio Off</div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Check if the user is on a mobile device
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+  
+      if (isMobile) {
+        // Find the Catalog link in the navigation bar
+        const catalogLink = document.querySelector(".navigation-bar a[href='newport.html']");
+  
+        // Change the href attribute to point to port12.html
+        if (catalogLink) {
+          catalogLink.setAttribute('href', 'port12.html');
+        }
+      }
+    });
+  </script>
   <!-- Your JavaScript code -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Include jQuery -->
   <script>
