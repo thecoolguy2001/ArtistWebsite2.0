@@ -234,6 +234,22 @@
 
 <!-- Tooltip for CD Image -->
 <div id="cd-tooltip" class="tooltip">Radio Off</div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Check if the user is on a mobile device
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+  
+      if (isMobile) {
+        // Find the Catalog link in the navigation bar
+        const catalogLink = document.querySelector(".navigation-bar a[href='newport.html']");
+  
+        // Change the href attribute to point to port12.html
+        if (catalogLink) {
+          catalogLink.setAttribute('href', 'port12.html');
+        }
+      }
+    });
+  </script>
 
   <script type="module">
     import * as THREE from "https://cdn.skypack.dev/three@0.129.0/build/three.module.js";
@@ -280,7 +296,6 @@
 
 // Update the models link from the bottom being the oldest and the top being newest
     const modelPaths = [
-      'netshirt 2.glb',
       'models/painting_rejoicehewillprovide/scene.gltf',
       'models/painting_reflection/scene.gltf',
       'models/painting_perseverance/scene.gltf',
@@ -309,7 +324,6 @@
       else if (modelPath.includes('painting_perseverance')) return 'port10.html';
       else if (modelPath.includes('painting_reflection')) return 'port11.html';
       else if (modelPath.includes('painting_rejoicehewillprovide')) return 'port12.html';
-      else if (modelPath.includes('netshirt 2')) return 'port13.html';
       return '#';
     }
 
