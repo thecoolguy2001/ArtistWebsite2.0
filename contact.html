@@ -1,9 +1,13 @@
+---
+permalink: /contact/
+---
 <!DOCTYPE html>
 <html>
 <head>
   <title>Deshaun Walker</title>
   <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Include Three.js and GLTFLoader -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/build/three.min.js"></script>
@@ -23,10 +27,17 @@
       background-image: url('video.mp4'); /* Replace with your actual sky background image */
       background-size: cover;
       background-position: center;
-      animation-name: fadeIn;
-    animation-duration: 1s; /* Adjust the time as needed */
-    animation-fill-mode: both;
     }
+    #background-video {
+  position: fixed;
+  top: 50%; 
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the video covers the container without stretching */
+  transform: translate(-50%, -50%); /* Centers the video */
+  z-index: -1; /* Keeps the video behind other content */
+}
 
     .navigation-bar {
       position: fixed;
@@ -148,14 +159,126 @@
   right: -15px;  /* Reduced bottom padding from 10px to 5px */
   transition: width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
 }
+/* Mobile Styles */
+@media (max-width: 768px) {
+  /* 1. Adjust Navigation Bar */
+  .navigation-bar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 10px 10px;
+    justify-content: flex-end;
+    max-width: 300px;
+    width: auto;
+  }
+
+  .navigation-bar a {
+    margin: 0 -2px; /* Reduce margin for tighter spacing */
+    font-size: 1em; /* Adjust font size for better fit */
+    padding: 8px 10px; /* Reduce padding for smaller touch targets */
+    display: inline-block;
+  }
+
+  /* 2. Adjust Carousel Container */
+  #carousel-container {
+    width: 100%; /* Make containers full width on mobile */
+    height: 100vh; /* Maintain full viewport height */
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0; /* Remove negative margin if causing layout issues */
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  /* 3. Ensure Carousel Renderer Fits Mobile Screen */
+  #carousel-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    pointer-events: auto;
+    transition: opacity 0.5s ease-in-out;
+
+  }
+
+  /* 4. Adjust Video Background */
+  #background-video {
+    object-fit: cover;
+  }
+
+  /* 5. Optimize Bottom Images Positioning */
+  #bottom-right-image {
+    bottom: 20px; /* Adjust bottom positioning */
+    right: 20px;  /* Adjust right positioning */
+  }
+  #bottom-right-image.active {
+  width: 110px; /* Increased width from 125px to 150px */
+  bottom: -4px;
+  right: -2px;  /* Reduced bottom padding from 10px to 5px */
+  transition: width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
+}
+
+  #bottom-left-image {
+    bottom: 20px; /* Adjust bottom positioning */
+    left: 20px;    /* Adjust left positioning */
+  }
+
+  /* 6. Increase Icon Sizes */
+  #bottom-right-image,
+  #bottom-left-image {
+    width: 80px; /* Adjusted width for mobile */
+    height: auto;
+  }
+
+  /* 7. Remove Tooltips on Mobile */
+  .tooltip {
+    display: none;
+  }
+  .contact-header h2 {
+    font-size: 1.5em; /* Smaller header font size */
+    margin-top: 1em; /* Adjust top margin for spacing */
+    margin-bottom: 1em; /* Adjust bottom margin for spacing */
+  }
+
+  /* Make all input fields and textarea the same smaller size */
+  .contact-form input[type='text'],
+  .contact-form textarea,
+  .contact-form input[type='submit'] {
+    font-size: 0.9em; /* Smaller font size for form elements */
+    width: 100%; /* Ensure they take full width */
+    padding: 0.5em; /* Adjust padding for touch-friendly size */
+    margin-bottom: 1em; /* Maintain uniform spacing */
+    box-sizing: border-box; /* Include padding in element width */
+  }
+
+  /* Optional: Adjust the form container for better layout */
+  .contact-form {
+    width: 75%; /* Keep the form width manageable on mobile */
+    margin: 10px auto; /* Center and add some vertical spacing */
+    padding: 10px; /* Internal spacing for better readability */
+  }
+
+  /* Optional: Reduce submit button padding */
+  .contact-form input[type='submit'] {
+    padding: 0.8em; /* Slightly smaller button padding */
+    font-size: 1em; /* Adjust button text size */
+  }
+}
   </style>
 </head>
 <body>
-
+<!-- Video Background -->
+<video autoplay muted loop playsinline id="background-video">
+  <source src="assets/video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
   
   <nav class="navigation-bar">
-    <a href="newabout.html">About</a>
-    <a href="newport.html">Catalog</a>
+    <a href="about.html">About</a>
+    <a href="catalog.html">Catalog</a>
     <a href="contact.html" class="active">Contact</a>
   </nav>
   <!-- Logo Container -->
@@ -178,7 +301,7 @@
 
   </div>
   <!-- Bottom Right Image -->
-  <img id="bottom-right-image" src="cd.png" alt="Description">
+  <img id="bottom-right-image" src="assets/cd.png" alt="Description">
   <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/examples/js/controls/OrbitControls.js"></script>
 
   <!-- Tooltip for Logo -->
@@ -186,6 +309,22 @@
 
 <!-- Tooltip for CD Image -->
 <div id="cd-tooltip" class="tooltip">Radio Off</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Check if the user is on a mobile device
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+    if (isMobile) {
+      // Find the Catalog link in the navigation bar
+      const catalogLink = document.querySelector(".navigation-bar a[href='catalog.html']");
+
+      // Change the href attribute to point to port12.html
+      if (catalogLink) {
+        catalogLink.setAttribute('href', '/catalog/12.html');
+      }
+    }
+  });
+</script>
   <!-- Your JavaScript code -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Include jQuery -->
   <script>
@@ -254,7 +393,7 @@
       // Load the logo model
       const logoLoader = new THREE.GLTFLoader();
       logoLoader.load(
-        'logo.v2.glb',
+        'models/logo.v2.glb',
         function(gltf) {
         logoModel = gltf.scene;
         logoModel.traverse((child)=>{
@@ -396,9 +535,9 @@ function hideLogoTooltip() {
   (function() {
     // Define the playlist array with your audio file paths
     const playlist = [
-      'song1.mp3',
-      'song2.mp3',
-      'song3.mp3'
+      'music/song1.mp3',
+      'music/song2.mp3',
+      'music/song3.mp3'
       // Add more songs as needed
     ];
   
@@ -443,7 +582,7 @@ function hideLogoTooltip() {
     function toggleRadio() {
       if (radioAudio.paused) {
         radioAudio.play().then(() => {
-          cdImage.src = 'cd.gif'; // Spinning CD animation
+          cdImage.src = 'assets/cd.gif'; // Spinning CD animation
           cdImage.alt = 'Radio On';
           cdTooltip.textContent = 'Radio On';
           cdImage.classList.add('active'); // Add the 'active' class
@@ -452,7 +591,7 @@ function hideLogoTooltip() {
         });
       } else {
         radioAudio.pause();
-        cdImage.src = 'cd.png';
+        cdImage.src = 'assets/cd.png';
         cdImage.alt = 'Radio Off';
         cdTooltip.textContent = 'Radio Off';
         cdImage.classList.remove('active'); // Remove the 'active' class

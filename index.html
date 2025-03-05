@@ -4,13 +4,14 @@
   <title>Deshaun Walker</title>
   <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <!-- Include Three.js and GLTFLoader -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/build/three.min.js"></script>
   <!-- Corrected GLTFLoader script tag -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.129.0/examples/js/loaders/GLTFLoader.js"></script>
-
-  <style>
+  
+   <style>
     html, body {
       height: 100%;
       margin: 0;
@@ -22,21 +23,21 @@
       justify-content: center;
       align-items: center;
       /* Set a neutral or matching background to reduce visible flash */
-      background: url('placeholder.jpg') no-repeat center center fixed;
+      background: url('assets/placeholder.jpg') no-repeat center center fixed;
       background-size: cover;
       overflow: hidden;
     }
 
     #background-video {
-  position: fixed;
-  top: 50%; 
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ensures the video covers the container without stretching */
-  transform: translate(-50%, -50%); /* Centers the video */
-  z-index: -1; /* Keeps the video behind other content */
-}
+      position: fixed;
+      top: 50%; 
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures the video covers the container without stretching */
+      transform: translate(-50%, -50%); /* Centers the video */
+      z-index: -1; /* Keeps the video behind other content */
+    }
 
     .navigation-bar {
       position: fixed;
@@ -58,37 +59,34 @@
       text-decoration: underline;
     }
 
-   
-
     #model-container {
       width: 500px;
       height: 500px;
       position: fixed;
       top: 5px;
       left: 0;
-  z-index: 2;
+      z-index: 2;
   
     }
-    #model-container canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
 
+    #model-container canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
     /* Carousel container styles */
     #carousel-container {
       width: 100%;
       height: 100vh;
       position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: -50px;
-  opacity: 0; /* Start with invisible carousel */
-  transition: opacity 0.5s ease-in-out;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: -50px;
+      opacity: 0; /* Start with invisible carousel */
+      transition: opacity 0.5s ease-in-out;
     }
-
     /* Ensure the canvas fills the carousel container */
     #carousel-container canvas {
       width: 100%;
@@ -105,788 +103,971 @@
       height: auto;
     }
     /* Bottom Left Image Styles */
-#bottom-left-image {
-  position: fixed;
-  bottom: 10px;
-  left: 5px;
-  z-index: 2;
-  width: 125px; /* Adjust size as needed */
-  height: auto;
-  cursor: pointer; /* Change cursor to pointer on hover */
-  transition: transform 0.3s ease; /* Smooth hover effect */
-}
+    #bottom-left-image {
+      position: fixed;
+      bottom: 10px;
+      left: 5px;
+      z-index: 2;
+      width: 125px; /* Adjust size as needed */
+      height: auto;
+      cursor: pointer; /* Change cursor to pointer on hover */
+      transition: transform 0.3s ease; /* Smooth hover effect */
+    }
 
-#bottom-left-image:hover {
-  transform: scale(1.05); /* Slightly enlarge on hover */
-}
-/* Tooltip Styles */
-.tooltip {
-  position: absolute;
-  padding: 8px 12px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 4px;
-  font-size: 0.9em;
-  pointer-events: none; /* Allows mouse events to pass through */
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-  white-space: nowrap; /* Prevents text from wrapping */
-  z-index: 10; /* Ensures tooltip appears above other elements */
-}
-/* Tooltip Styles */
-#nettspend-tooltip {
-  position: absolute;
-  padding: 8px 12px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 4px;
-  font-size: 0.9em;
-  pointer-events: none; /* Allows mouse events to pass through */
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-  white-space: nowrap; /* Prevents text from wrapping */
-  z-index: 10; /* Ensures tooltip appears above other elements */
-}
-#bottom-right-image.active {
-  width: 180px; /* Increased width from 125px to 150px */
-  bottom: -35px;
-  right: -15px;  /* Reduced bottom padding from 10px to 5px */
-  transition: width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
-}
-  </style>
-</head>
-<body>
-  <video autoplay muted loop id="background-video">
-    <source src="video3.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+    #bottom-left-image:hover {
+      transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+    /* Tooltip Styles */
+    .tooltip {
+      position: absolute;
+      padding: 8px 12px;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 4px;
+      font-size: 0.9em;
+      pointer-events: none; /* Allows mouse events to pass through */
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+      white-space: nowrap; /* Prevents text from wrapping */
+      z-index: 10; /* Ensures tooltip appears above other elements */
+    }
+
+    /* Tooltip Styles */
+    #nettspend-tooltip {
+      position: absolute;
+      padding: 8px 12px;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 4px;
+      font-size: 0.9em;
+      pointer-events: none; /* Allows mouse events to pass through */
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+      white-space: nowrap; /* Prevents text from wrapping */
+      z-index: 10; /* Ensures tooltip appears above other elements */
+    }
+    
+    #bottom-right-image.active {
+      width: 180px; /* Increased width from 125px to 150px */
+      bottom: -35px;
+      right: -15px;  /* Reduced bottom padding from 10px to 5px */
+      transition: width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
+    }
+    
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      /* 1. Adjust Navigation Bar */
+      .navigation-bar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        display: flex;
+        flex-wrap: nowrap;
+        padding: 10px 10px;
+        justify-content: flex-end;
+        max-width: 300px;
+        width: auto;
+        z-index: 2;
+      }
+
+      .navigation-bar a {
+        margin: 0 -2px; /* Reduce margin for tighter spacing */
+        font-size: 1em; /* Adjust font size for better fit */
+        padding: 8px 10px; /* Reduce padding for smaller touch targets */
+        display: inline-block;
+      }
+      
+      /* 2. Adjust Carousel Container */
+      #carousel-container {
+        width: 100%; /* Make containers full width on mobile */
+        height: 100vh; /* Maintain full viewport height */
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0; /* Remove negative margin if causing layout issues */
+        transition: opacity 0.5s ease-in-out;
+      }
+      /* 3. Ensure Carousel Renderer Fits Mobile Screen */
+      #carousel-container canvas {
+        width: 100% !important;
+        height: 100% !important;
+        position: absolute;
+        height: 100%;
+        z-index: 1; 
+        display: block;
+        pointer-events: auto;
+        transition: opacity 0.5s ease-in-out;
+      }
+      /* 4. Adjust Video Background */
+      #background-video {
+        object-fit: cover;
+      }
+      /* 5. Optimize Bottom Images Positioning */
+      #bottom-right-image {
+        bottom: 20px; /* Adjust bottom positioning */
+        right: 20px;  /* Adjust right positioning */
+      }
+      
+      #bottom-right-image.active {
+        width: 110px; /* Increased width from 125px to 150px */
+        bottom: -4px;
+        right: -2px;  /* Reduced bottom padding from 10px to 5px */
+        transition: width 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Smooth transitions for size and position changes */
+      }
+      
+      #bottom-left-image {
+        bottom: 20px; /* Adjust bottom positioning */
+        left: 20px;    /* Adjust left positioning */
+      }
+      /* 6. Increase Icon Sizes */
+      #bottom-right-image,
+      #bottom-left-image {
+        width: 80px; /* Adjusted width for mobile */
+        height: auto;
+        z-index: 2;
+      }
+      /* 7. Remove Tooltips on Mobile */
+      .tooltip {
+        display: none;
+      }
+      /* 8. Optional: Hide Certain Elements on Mobile */
+      /* If certain elements are too bulky for mobile, consider hiding them */
+      /* Example:
+      #model-container {
+      display: none;
+      }
+      */
+    }
+    
+    </style>
+    </head>
+    <body>
+      <video autoplay muted loop playsinline id="background-video">
+        <source src="/assets/video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
       <div id="model-container"></div>
-
-  <nav class="navigation-bar">
-    <a href="newabout.html">About</a>
-    <a href="newport.html">Catalog</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-
-  <!-- Carousel Container -->
-  <div id="carousel-container"></div>
-
-  <!-- Bottom Right Image -->
-  <img id="bottom-right-image" src="cd.png" alt="Description">
-
-  <!-- Bottom Left Image -->
-<a href="https://badassfuckingkid.com" target="_blank" aria-label="BAFK.com" >
-  <img id="bottom-left-image" src="bafk.png" alt="BAFK.com">
-</a>
-
-<!-- Tooltip for BAFK.com Image -->
-<div id="nettspend-tooltip" class="tooltip">BAFK.com</div>
-
-<!-- Tooltip for Logo -->
-<div id="logo-tooltip" class="tooltip">Home</div>
-
-<!-- Tooltip for CD Image -->
-<div id="cd-tooltip" class="tooltip">Radio Off</div>
-
-  <!-- Your JavaScript Code -->
-  <script>
-    // Create the scene
-const scene = new THREE.Scene();
-
-// Set up the camera
-const camera = new THREE.PerspectiveCamera(80, 1, 0.1, 1000);
-
-camera.position.z = 1;
-
-// Create the renderer
-// Create the renderer
-const renderer = new THREE.WebGLRenderer({ alpha: true });
-renderer.setSize(100, 100);
-renderer.setPixelRatio(window.devicePixelRatio); // Ensure crisp rendering on high-DPI screens
-document.getElementById('model-container').appendChild(renderer.domElement);
-// Add lights to the scene
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); // Soft white light
-scene.add(ambientLight);
-
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-directionalLight.position.set(5, 10, 7.5); // Adjust position as needed
-scene.add(directionalLight);
-
-// Raycaster and mouse vector for detecting clicks
-const raycasterLogo = new THREE.Raycaster();
-const mouseLogo = new THREE.Vector2();
-
-// Variable to hold the logo model
-let logoModel;
-
-// Load the logo model
-const loader = new THREE.GLTFLoader();
-// Load the logo model
-loader.load(
-  'logo.v2.glb',
-  function (gltf) {
-    logoModel = gltf.scene;
-
-    // Center the logo model
-    const box = new THREE.Box3().setFromObject(logoModel);
-    const center = box.getCenter(new THREE.Vector3());
-    logoModel.position.sub(center); // Shift the model so that its center is at (0,0,0)
-
-    // Optional: Adjust material properties if the logo is still dark
-    logoModel.traverse((child) => {
-      if (child.isMesh) {
-        child.material.side = THREE.DoubleSide; // Ensure both sides are rendered
-        child.material.needsUpdate = true;
-      }
-    });
-
-    scene.add(logoModel);
-  },
-  undefined,
-  function (error) {
-    console.error(error);
-  }
-);
-
-
-// Add event listener for click on the renderer's DOM element
-renderer.domElement.addEventListener('click', onLogoClick, false);
-
-function onLogoClick(event) {
-  // Calculate mouse position in normalized device coordinates (-1 to +1)
-  const rect = renderer.domElement.getBoundingClientRect();
-  mouseLogo.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-  mouseLogo.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-  // Update the raycaster
-  raycasterLogo.setFromCamera(mouseLogo, camera);
-
-  // Calculate objects intersecting the picking ray
-  if (logoModel) {
-    const intersects = raycasterLogo.intersectObject(logoModel, true);
-
-    if (intersects.length > 0) {
-      // Redirect to homepage
-      window.location.href = 'index.html';
-    }
-  }
-}
-
-renderer.domElement.addEventListener('mousemove',onLogoMouseMove,false);
-
-function onLogoMouseMove(event) {
-  const rect = renderer.domElement.getBoundingClientRect();
-  mouseLogo.x = ((event.clientX-rect.left)/rect.width)*2-1;
-  mouseLogo.y = -((event.clientY-rect.top)/rect.height)*2+1;
-
-  raycasterLogo.setFromCamera(mouseLogo,camera);
-
-  let intersects=[];
-  if(logoModel){
-    intersects=raycasterLogo.intersectObject(logoModel,true);
-  }
-
-  renderer.domElement.style.cursor = intersects.length>0?'pointer':'default';
-}
-
-// Animation loop for the header logo
-function animateLogo() {
-  requestAnimationFrame(animateLogo);
-  // Rotate the model
-  if (logoModel) {
-    logoModel.rotation.y += 0.01;
-  }
-  renderer.render(scene, camera);
-}
-
-animateLogo();
-
-    // 3D Carousel Code
-
-    // Get the carousel container
-    const carouselContainer = document.getElementById('carousel-container');
-
-    // Create a Three.js scene for the carousel
-    const carouselScene = new THREE.Scene();
-
-    // Set up a camera for the carousel
-    const carouselCamera = new THREE.PerspectiveCamera(
-      80,
-      carouselContainer.clientWidth / carouselContainer.clientHeight,
-      10,
-      5000
-    );
-    carouselCamera.position.set(0, 200, 1000);
-    carouselCamera.lookAt(0, 0, 0);
-
-    // Instantiate a new renderer for the carousel
-    const carouselRenderer = new THREE.WebGLRenderer({ alpha: true });
-    carouselRenderer.setSize(carouselContainer.clientWidth, carouselContainer.clientHeight);
-    carouselRenderer.setPixelRatio(window.devicePixelRatio);
-    carouselRenderer.setPixelRatio(window.devicePixelRatio);
-    carouselContainer.appendChild(carouselRenderer.domElement);
-
-    // Add lights to the carousel scene
-// Add lights to the carousel scene
-const carouselAmbientLight = new THREE.AmbientLight(0x404040, 2); // Increased intensity
-carouselScene.add(carouselAmbientLight);
-
-const carouselDirectionalLight1 = new THREE.DirectionalLight(0xffffff, 3);
-carouselDirectionalLight1.position.set(1, 1, 1).normalize();
-carouselScene.add(carouselDirectionalLight1);
-
-
-const carouselPointLight = new THREE.PointLight(0xffffff, 2.5, 3000);
-carouselPointLight.position.set(0, 500, 500); // Position above and in front of the carousel
-carouselScene.add(carouselPointLight);
-
-    // Instantiate a loader for the carousel models
-    const carouselLoader = new THREE.GLTFLoader();
-
-    // Group to hold carousel items
-    const carouselGroup = new THREE.Group();
-    carouselScene.add(carouselGroup);
-
-    // Raycasting variables for carousel interaction
-const raycasterCarousel = new THREE.Raycaster();
-const mouseCarousel = new THREE.Vector2(9999, 9999);
-let hoveredCarouselModel = null;
-let isCarouselPaused = false;
-
-// Event listeners for mouse movement
-carouselRenderer.domElement.addEventListener('mousemove', onCarouselMouseMove, false);
-
-
-    // Array of model paths to use in the carousel
-    const models = [
-      'models/painting_reflection/scene.gltf', //Third
-      'models/painting_rejoicehewillprovide/scene.gltf', //Second
-      'netshirt 2.glb', //First
-      'models/painting_faith/scene.gltf', //Eigth
-      'models/painting_feelingbloom/scene.gltf', //Seventh
-      'models/painting_goodbye/scene.gltf', //Sixth
-      'models/painting_hell/scene.gltf', //Fifth
-      'models/painting_perseverance/scene.gltf',//Fourth
-
-      // Add more model paths as needed
-    ];
-// Counter to track loaded models
-let modelsLoaded = 0;
-
-// Total number of models in the carousel
-const totalModels = models.length;
-   // Function to create a carousel of 3D models
-const createCarousel = (modelPaths, numItems, radius) => {
-  for (let i = 0; i < numItems; i++) {
-    const modelPath = modelPaths[i % modelPaths.length];
-    carouselLoader.load(
-      modelPath,
-      function (gltf) {
-        const object = gltf.scene;
-        const angle = (i / numItems) * Math.PI * 2;
-        const x = Math.cos(angle) * radius;
-        const z = Math.sin(angle) * radius;
-        object.position.set(x, 0, z);
-        object.rotation.y = -angle + Math.PI / 2;
-
-        // **Uniform Scaling for All Models**
-        object.scale.set(250, 250, 250); // Same scale as painting1
-
-        // Center the model and align its base to Y = 0
-        const box = new THREE.Box3().setFromObject(object);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
-
-        object.position.sub(center);
-        object.position.y += size.y / 2;
-
-        // Adjust position after centering
-        object.position.x += x;
-        object.position.z += z;
-
-        // Assign URLs for models
-        if (modelPath.includes('tshirt')) {
-          object.userData.url = 'port13.html';
-        } else if (modelPath.includes('painting_rejoicehewillprovide')) {
-          object.userData.url = 'port12.html';
-        } else if (modelPath.includes('painting_reflection')) {
-          object.userData.url = 'port11.html';
-        } else if (modelPath.includes('painting_perseverance')) {
-          object.userData.url = 'port10.html';
-        } else if (modelPath.includes('painting_hell')) {
-          object.userData.url = 'port9.html';
-        } else if (modelPath.includes('painting_goodbye')) {
-          object.userData.url = 'port8.html';
-        } else if (modelPath.includes('painting_feelingbloom')) {
-          object.userData.url = 'port7.html';
-        } else if (modelPath.includes('painting_faith')) {
-          object.userData.url = 'port6.html';
+      <nav class="navigation-bar">
+        <a href="about.html">About</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <!-- Carousel Container -->
+      <div id="carousel-container"></div>
+      <!-- Bottom Right Image -->
+      <img id="bottom-right-image" src="/assets/cd.png" alt="Description">
+      <!-- Tooltip for CD Image -->
+      <div id="cd-tooltip" class="tooltip">Radio Off</div>
+      <script>
+      document.addEventListener('DOMContentLoaded', function () {
+      // Check if the user is on a mobile device
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+      
+      if (isMobile) {
+        // Find the Catalog link in the navigation bar
+        const catalogLink = document.querySelector(".navigation-bar a[href='catalog.html']");
+        // Change the href attribute to point to port13.html
+        if (catalogLink) {
+          catalogLink.setAttribute('href', 'catalog/12.html');
         }
-        // Add more models and URLs as needed
-
-        carouselGroup.add(object);
-        // Increment loaded models counter
-        modelsLoaded++;
-
-        // Check if all models are loaded
-        if (modelsLoaded === totalModels) {
-          // Fade in the carousel container
-          const carouselContainer = document.getElementById('carousel-container');
-          carouselContainer.style.opacity = 1; // Trigger the CSS transition
-        }
-      },
-     
-      undefined,
-      function (error) {
-        console.error('Error loading model:', modelPath, error);
       }
-    );
-  }
-};
-    // Create the carousel
-    createCarousel(models, 8, 500);
-
-    // Variables to manage carousel rotation
-    let carouselAngle = 0;
-    let carouselTargetAngle = 0;
-    const carouselRotationSpeed = 0.02;
-
-    
-
-    function onCarouselMouseMove(event) {
-  // Calculate mouse position in normalized device coordinates (-1 to +1)
-  const rect = carouselRenderer.domElement.getBoundingClientRect();
-  mouseCarousel.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-  mouseCarousel.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-}
-carouselRenderer.domElement.addEventListener('click', onCarouselClick, false);
-
-function onCarouselClick(event) {
-  // Calculate mouse position in normalized device coordinates (-1 to +1)
-  const rect = carouselRenderer.domElement.getBoundingClientRect();
-  mouseCarousel.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-  mouseCarousel.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-  // Update the raycaster
-  raycasterCarousel.setFromCamera(mouseCarousel, carouselCamera);
-
-  // Calculate objects intersecting the picking ray
-  const intersects = raycasterCarousel.intersectObjects(carouselGroup.children, true);
-
-  if (intersects.length > 0) {
-    const intersectedObject = intersects[0].object;
-
-    // Find the top-level model object
-    let model = intersectedObject;
-    while (model.parent && model.parent !== carouselGroup) {
-      model = model.parent;
-    }
-
-    if (model.userData.url) {
-      window.location.href = model.userData.url;
-    }
-  }
-}
-
-
-
-    // Animation loop for the carousel
-function animateCarousel() {
-  requestAnimationFrame(animateCarousel);
-
-  // Update the raycaster
-  raycasterCarousel.setFromCamera(mouseCarousel, carouselCamera);
-
-  // Calculate objects intersecting the picking ray
-  const intersects = raycasterCarousel.intersectObjects(carouselGroup.children, true);
-
-  if (intersects.length > 0) {
-    const intersectedObject = intersects[0].object;
-
-    // Find the top-level model object
-    let model = intersectedObject;
-    while (model.parent && model.parent !== carouselGroup) {
-      model = model.parent;
-    }
-
-    if (hoveredCarouselModel !== model) {
-      // Reset previous hovered model position
-      if (hoveredCarouselModel) {
-        hoveredCarouselModel.position.y = hoveredCarouselModel.userData.originalY || 0;
-      }
-
-      hoveredCarouselModel = model;
-
-      // Store original Y position if not already stored
-      if (!hoveredCarouselModel.userData.originalY) {
-        hoveredCarouselModel.userData.originalY = hoveredCarouselModel.position.y;
-      }
-
-      // Pause carousel rotation
-      isCarouselPaused = true;
-    }
-
-    // Change cursor to pointer
-    carouselRenderer.domElement.style.cursor = 'pointer';
-  } else {
-    // No intersections
-    if (hoveredCarouselModel) {
-      // Reset position
-      hoveredCarouselModel.position.y = hoveredCarouselModel.userData.originalY || 0;
-      hoveredCarouselModel = null;
-    }
-
-    // Resume carousel rotation
-    isCarouselPaused = false;
-
-    // Change cursor back to default
-    carouselRenderer.domElement.style.cursor = 'default';
-  }
-
-  // Animate model raising up smoothly
-  if (hoveredCarouselModel) {
-    const targetY = hoveredCarouselModel.userData.originalY + 50; // Raise by 50 units
-    hoveredCarouselModel.position.y += (targetY - hoveredCarouselModel.position.y) * 0.1;
-  }
-
-  // Smoothly transition other models back down
-  carouselGroup.children.forEach((model) => {
-    if (model !== hoveredCarouselModel && model.userData.originalY !== undefined) {
-      model.position.y += (model.userData.originalY - model.position.y) * 0.1;
-    }
-  });
-
-  // Rotate the carousel if not paused
-  if (!isCarouselPaused) {
-    // Smoothly transition to the target angle
-    carouselAngle += (carouselTargetAngle - carouselAngle) * carouselRotationSpeed;
-  }
-
-  carouselGroup.rotation.y = carouselAngle;
-
-  carouselRenderer.render(carouselScene, carouselCamera);
-}
-
-    // Handle window resizing for the carousel
-    window.addEventListener('resize', function () {
-      carouselCamera.aspect = carouselContainer.clientWidth / carouselContainer.clientHeight;
-      carouselCamera.updateProjectionMatrix();
-      carouselRenderer.setSize(carouselContainer.clientWidth, carouselContainer.clientHeight);
-    });
-
-    // Event listener for keyboard arrow key navigation
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'ArrowRight') {
-        carouselTargetAngle -= Math.PI / 4;
-      } else if (event.key === 'ArrowLeft') {
-        carouselTargetAngle += Math.PI / 4;
-      }
-    });
-
-    // Automatic rotation
-    setInterval(() => {
-      carouselTargetAngle -= Math.PI / 4;
-    }, 6000);
-
-    // Start the carousel animation
-    animateCarousel();
-    
-
-    // Tooltip Elements
-const nettspendTooltip = document.getElementById('nettspend-tooltip');
-const bottomLeftImage = document.getElementById('bottom-left-image');
-
-// Event listeners for the Nett Spend image
-bottomLeftImage.addEventListener('mouseenter', showTooltipNettSpend);
-bottomLeftImage.addEventListener('mousemove', moveTooltipNettSpend);
-bottomLeftImage.addEventListener('mouseleave', hideTooltipNettSpend);
-
-function showTooltipNettSpend(event) {
-  nettspendTooltip.textContent = 'BAFK.com';
-  nettspendTooltip.style.opacity = '1'; // Show the tooltip
-  positionTooltipNettSpend(event);
-}
-
-function moveTooltipNettSpend(event) {
-  if (nettspendTooltip.style.opacity === '1') {
-    positionTooltipNettSpend(event);
-  }
-}
-
-function positionTooltipNettSpend(event) {
-  const tooltipWidth = nettspendTooltip.offsetWidth;
-  const tooltipHeight = nettspendTooltip.offsetHeight;
-  const pageWidth = window.innerWidth;
-  const pageHeight = window.innerHeight;
-
-  let tooltipX = event.clientX + 10; // 10px to the right of the cursor
-  let tooltipY = event.clientY - tooltipHeight - 10; // 10px above the cursor
-
-  // Prevent tooltip from going off the right edge
-  if (tooltipX + tooltipWidth > pageWidth) {
-    tooltipX = event.clientX - tooltipWidth - 10;
-  }
-
-  // Prevent tooltip from going above the top edge
-  if (tooltipY < 0) {
-    tooltipY = event.clientY + 10;
-  }
-
-  nettspendTooltip.style.left = tooltipX + 'px';
-  nettspendTooltip.style.top = tooltipY + 'px';
-}
-
-function hideTooltipNettSpend() {
-  nettspendTooltip.style.opacity = '0'; // Hide the tooltip
-}
-
-/*************************************
- * LOGO TOOLTIP LOGIC
- *************************************/
-// Grab the existing tooltip element for the logo
-const logoTooltip = document.getElementById('logo-tooltip');
-
-// Modify your onLogoMouseMove function to show/hide the tooltip
-function onLogoMouseMove(event) {
-  const rect = renderer.domElement.getBoundingClientRect();
-  mouseLogo.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-  mouseLogo.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-  raycasterLogo.setFromCamera(mouseLogo, camera);
-
-  let intersects = [];
-  if (logoModel) {
-    intersects = raycasterLogo.intersectObject(logoModel, true);
-  }
-
-  // Change cursor
-  renderer.domElement.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
-
-  // === SHOW/HIDE TOOLTIP FOR THE LOGO ===
-  if (intersects.length > 0) {
-    showTooltipLogo(event.clientX, event.clientY, 'Home');
-  } else {
-    hideTooltipLogo();
-  }
-}
-
-// Show the tooltip near the mouse cursor
-function showTooltipLogo(x, y, text) {
-  logoTooltip.textContent = text;
-  // Position the tooltip a bit offset from the cursor
-  logoTooltip.style.left = (x + 10) + 'px';
-  logoTooltip.style.top = (y) + 'px';
-  logoTooltip.style.opacity = '1';
-}
-
-function hideTooltipLogo() {
-  logoTooltip.style.opacity = '0';
-}
-
-
-/*************************************
- * CD TOOLTIP LOGIC
- *************************************/
-// Grab the existing tooltip element for the CD
-const cdTooltip = document.getElementById('cd-tooltip');
-// Get the CD image element
-const bottomRightImage = document.getElementById('bottom-right-image');
-
-if (bottomRightImage) {
-  bottomRightImage.addEventListener('mouseenter', showTooltipCD);
-  bottomRightImage.addEventListener('mousemove', moveTooltipCD);
-  bottomRightImage.addEventListener('mouseleave', hideTooltipCD);
-}
-
-function showTooltipCD(event) {
-  cdTooltip.textContent = 'Radio Off'; // or conditionally check bottomRightImage.alt if needed
-  cdTooltip.style.opacity = '1';
-  positionTooltipCD(event);
-}
-
-function moveTooltipCD(event) {
-  if (cdTooltip.style.opacity === '1') {
-    positionTooltipCD(event);
-  }
-}
-
-function positionTooltipCD(event) {
-  const tooltipWidth = cdTooltip.offsetWidth;
-  const tooltipHeight = cdTooltip.offsetHeight;
-  const pageWidth = window.innerWidth;
-  const pageHeight = window.innerHeight;
-
-  let tooltipX = event.clientX + 10; // Offset horizontally
-  let tooltipY = event.clientY - tooltipHeight - 10; // Offset vertically above cursor
-
-  // Prevent tooltip from going off the right edge
-  if (tooltipX + tooltipWidth > pageWidth) {
-    tooltipX = event.clientX - tooltipWidth - 10;
-  }
-  // Prevent tooltip from going above the top edge
-  if (tooltipY < 0) {
-    tooltipY = event.clientY + 10;
-  }
-
-  cdTooltip.style.left = tooltipX + 'px';
-  cdTooltip.style.top = tooltipY + 'px';
-}
-
-function hideTooltipCD() {
-  cdTooltip.style.opacity = '0';
-}
-  </script>
-  <script>
-    (function() {
-      // Define the playlist array with your audio file paths
-      const playlist = [
-        'song1.mp3',
-        'song2.mp3',
-        'song3.mp3'
-        // Add more songs as needed
-      ];
-    
-      // Initialize the current track index
-      let currentTrackIndex = 0;
-    
-      // Create the Audio object without setting the source initially
-      const radioAudio = new Audio();
-      radioAudio.src = playlist[currentTrackIndex];
-      radioAudio.loop = false; // No looping individual tracks
-      radioAudio.autoplay = false; // User interaction required to play
-    
-      // Event listener for when a track ends
-      radioAudio.addEventListener('ended', function() {
-        // Select a random track index
-        let nextTrackIndex = Math.floor(Math.random() * playlist.length);
+      });
+      </script>
+      <!-- Your JavaScript Code -->
+      <script>
+      // Create the scene
+      const scene = new THREE.Scene();
+      // Set up the camera
+      const camera = new THREE.PerspectiveCamera(80, 1, 0.1, 1000);
+      camera.position.z = 1;
+      
+      // Create the renderer
+      // Create the renderer
+      const renderer = new THREE.WebGLRenderer({ alpha: true });
+      renderer.setSize(100, 100);
+      renderer.setPixelRatio(window.devicePixelRatio); // Ensure crisp rendering on high-DPI screens
+      document.getElementById('model-container').appendChild(renderer.domElement);
+      // Add lights to the scene
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); // Soft white light
+      scene.add(ambientLight);
+      
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      directionalLight.position.set(5, 10, 7.5); // Adjust position as needed
+      scene.add(directionalLight);
+      
+      // Raycaster and mouse vector for detecting clicks
+      const raycasterLogo = new THREE.Raycaster();
+      const mouseLogo = new THREE.Vector2();
+      // Variable to hold the logo model
+      let logoModel;
+      
+      // Load the logo model
+      const loader = new THREE.GLTFLoader();
+      
+      // Load the logo model
+      loader.load(
+        '/models/logo.v2.glb',
+      
+        function (gltf) {
+          logoModel = gltf.scene;
+          
+          // Center the logo model
+          const box = new THREE.Box3().setFromObject(logoModel);
+          const center = box.getCenter(new THREE.Vector3());
+          logoModel.position.sub(center); // Shift the model so that its center is at (0,0,0)
+          
+          // Optional: Adjust material properties if the logo is still dark
+          logoModel.traverse((child) => {
+            if (child.isMesh) {
+              child.material.side = THREE.DoubleSide; // Ensure both sides are rendered
+              child.material.needsUpdate = true;
+            }
+          });
+          
+          scene.add(logoModel);
+        },
         
-        // Optional: Prevent the same track from playing consecutively
-        if (playlist.length > 1) { // Ensure there are at least two tracks
-          while (nextTrackIndex === currentTrackIndex) {
-            nextTrackIndex = Math.floor(Math.random() * playlist.length);
+        undefined,
+        
+        function (error) {
+          console.error(error);
+        }
+      );
+      
+      // Add event listener for click on the renderer's DOM element
+      renderer.domElement.addEventListener('click', onLogoClick, false);
+      
+      function onLogoClick(event) {
+        // Calculate mouse position in normalized device coordinates (-1 to +1)
+        const rect = renderer.domElement.getBoundingClientRect();
+        mouseLogo.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouseLogo.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        
+        // Update the raycaster
+        raycasterLogo.setFromCamera(mouseLogo, camera);
+        
+        // Calculate objects intersecting the picking ray
+        if (logoModel) {
+          const intersects = raycasterLogo.intersectObject(logoModel, true);
+          
+          if (intersects.length > 0) {
+            // Redirect to homepage
+            window.location.href = 'index.html';
+          }
+        }
+      }
+      
+      renderer.domElement.addEventListener('mousemove',onLogoMouseMove,false);
+      
+      function onLogoMouseMove(event) {
+        const rect = renderer.domElement.getBoundingClientRect();
+        mouseLogo.x = ((event.clientX-rect.left)/rect.width)*2-1;
+        mouseLogo.y = -((event.clientY-rect.top)/rect.height)*2+1;
+        
+        raycasterLogo.setFromCamera(mouseLogo,camera);
+        
+        let intersects=[];
+        
+        if(logoModel){
+          intersects=raycasterLogo.intersectObject(logoModel,true);
+        }
+        
+        renderer.domElement.style.cursor = intersects.length>0?'pointer':'default';
+      }
+      
+      // Animation loop for the header logo
+      function animateLogo() {
+        requestAnimationFrame(animateLogo);
+        // Rotate the model
+        if (logoModel) {
+          logoModel.rotation.y += 0.01;
+        }
+        renderer.render(scene, camera);
+      }
+      
+      animateLogo();
+      
+      // 3D Carousel Code
+
+      // Get the carousel container
+      const carouselContainer = document.getElementById('carousel-container');
+      
+      // Create a Three.js scene for the carousel
+      const carouselScene = new THREE.Scene();
+      
+      // Set up a camera for the carousel
+      const carouselCamera = new THREE.PerspectiveCamera(
+        80,
+        carouselContainer.clientWidth / carouselContainer.clientHeight,
+        10,
+        5000
+      );
+      carouselCamera.position.set(0, 200, 1000);
+      carouselCamera.lookAt(0, 0, 0);
+      
+      // Instantiate a new renderer for the carousel
+      const carouselRenderer = new THREE.WebGLRenderer({ alpha: true });
+      carouselRenderer.setSize(carouselContainer.clientWidth, carouselContainer.clientHeight);
+      carouselRenderer.setPixelRatio(window.devicePixelRatio);
+      carouselRenderer.setPixelRatio(window.devicePixelRatio);
+      carouselContainer.appendChild(carouselRenderer.domElement);
+      
+      // Add lights to the carousel scene
+      const carouselAmbientLight = new THREE.AmbientLight(0x404040, 2); // Increased intensity
+      carouselScene.add(carouselAmbientLight);
+      
+      const carouselDirectionalLight1 = new THREE.DirectionalLight(0xffffff, 3);
+      carouselDirectionalLight1.position.set(1, 1, 1).normalize();
+      carouselScene.add(carouselDirectionalLight1);
+      
+      const carouselPointLight = new THREE.PointLight(0xffffff, 2.5, 3000);
+      carouselPointLight.position.set(0, 500, 500); // Position above and in front of the carousel
+      carouselScene.add(carouselPointLight);
+      
+      // Instantiate a loader for the carousel models
+      const carouselLoader = new THREE.GLTFLoader();
+      
+      // Group to hold carousel items
+      const carouselGroup = new THREE.Group();
+      carouselScene.add(carouselGroup);
+      
+      // Raycasting variables for carousel interaction
+      const raycasterCarousel = new THREE.Raycaster();
+      const mouseCarousel = new THREE.Vector2(9999, 9999);
+      let hoveredCarouselModel = null;
+      let isCarouselPaused = false;
+      
+      // Event listeners for mouse movement
+      carouselRenderer.domElement.addEventListener('mousemove', onCarouselMouseMove, false);
+      
+      // Array of model paths to use in the carousel
+      const models = [
+        'models/painting_perseverance/scene.gltf', //Third
+      'models/painting_reflection/scene.gltf', //Second
+      'models/painting_rejoicehewillprovide/scene.gltf', //First
+      'models/painting_eternalyouth/scene.gltf', //Eigth
+      'models/painting_faith/scene.gltf', //Seventh
+      'models/painting_feelingbloom/scene.gltf', //Sixth
+      'models/painting_goodbye/scene.gltf', //Fifth
+      'models/painting_hell/scene.gltf',//Fourth
+        // Add more model paths as needed
+        ];
+        
+        // Counter to track loaded models
+        let modelsLoaded = 0;
+        
+        // Total number of models in the carousel
+        const totalModels = models.length;
+        // Function to create a carousel of 3D models
+        const createCarousel = (modelPaths, numItems, radius) => {
+          for (let i = 0; i < numItems; i++) {
+            const modelPath = modelPaths[i % modelPaths.length];
+            carouselLoader.load(
+              modelPath,
+              
+              function (gltf) {
+                const object = gltf.scene;
+                const angle = (i / numItems) * Math.PI * 2;
+                const x = Math.cos(angle) * radius;
+                const z = Math.sin(angle) * radius;
+                object.position.set(x, 0, z);
+                object.rotation.y = -angle + Math.PI / 2;
+                
+                // **Uniform Scaling for All Models**
+                object.scale.set(250, 250, 250); // Same scale as painting1
+        
+                // Center the model and align its base to Y = 0
+                const box = new THREE.Box3().setFromObject(object);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                object.position.sub(center);
+                object.position.y += size.y / 2;
+                
+                // Adjust position after centering
+                object.position.x += x;
+                object.position.z += z;
+                
+                // Assign URLs for models
+                if (modelPath.includes('tshirt')) {
+                  object.userData.url = 'catalog/13.html';
+                } else if (modelPath.includes('painting_rejoicehewillprovide')) {
+                  object.userData.url = 'catalog/12.html';
+                } else if (modelPath.includes('painting_reflection')) {
+                  object.userData.url = 'catalog/11.html';
+                } else if (modelPath.includes('painting_perseverance')) {
+                  object.userData.url = 'catalog/10.html';
+                } else if (modelPath.includes('painting_hell')) {
+                  object.userData.url = 'catalog/9.html';
+                } else if (modelPath.includes('painting_goodbye')) {
+                  object.userData.url = 'catalog/8.html';
+                } else if (modelPath.includes('painting_feelingbloom')) {
+                  object.userData.url = 'catalog/7.html';
+                } else if (modelPath.includes('painting_faith')) {
+                  object.userData.url = 'catalog/6.html';
+                }
+                // Add more models and URLs as needed
+                 
+                carouselGroup.add(object);
+                // Increment loaded models counter
+                modelsLoaded++;
+                
+                // Check if all models are loaded
+                if (modelsLoaded === totalModels) {
+                  // Fade in the carousel container
+                  const carouselContainer = document.getElementById('carousel-container');
+                  carouselContainer.style.opacity = 1; // Trigger the CSS transition
+                }
+              },
+              undefined,
+                
+              function (error) {
+                console.error('Error loading model:', modelPath, error);
+              }
+            );
+          }
+        };
+        
+        // Create the carousel
+        createCarousel(models, 8, 500);
+        
+        // Variables to manage carousel rotation
+        let carouselAngle = 0;
+        let carouselTargetAngle = 0;
+        const carouselRotationSpeed = 0.02;
+        
+        function onCarouselMouseMove(event) {
+          // Calculate mouse position in normalized device coordinates (-1 to +1)
+          const rect = carouselRenderer.domElement.getBoundingClientRect();
+          mouseCarousel.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          mouseCarousel.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        }
+        
+        carouselRenderer.domElement.addEventListener('click', onCarouselClick, false);
+        
+        function onCarouselClick(event) {
+          // Calculate mouse position in normalized device coordinates (-1 to +1)
+          const rect = carouselRenderer.domElement.getBoundingClientRect();
+          mouseCarousel.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          mouseCarousel.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+          
+          // Update the raycaster
+          raycasterCarousel.setFromCamera(mouseCarousel, carouselCamera);
+          
+          // Calculate objects intersecting the picking ray
+          const intersects = raycasterCarousel.intersectObjects(carouselGroup.children, true);
+          
+          if (intersects.length > 0) {
+            const intersectedObject = intersects[0].object;
+            
+            // Find the top-level model object
+            let model = intersectedObject;
+            while (model.parent && model.parent !== carouselGroup) {
+              model = model.parent;
+            }
+            
+            if (model.userData.url) {
+              window.location.href = model.userData.url;
+            }
           }
         }
         
-        currentTrackIndex = nextTrackIndex; // Update the current track index
-        radioAudio.src = playlist[currentTrackIndex];
-        radioAudio.play().catch(err => {
-          console.error('Error playing next track:', err);
-        });
-      });
-    
-      // Get the CD image and tooltip elements
-      const cdImage = document.getElementById('bottom-right-image');
-      const cdTooltip = document.getElementById('cd-tooltip');
-    
-      if (!cdImage || !cdTooltip) {
-        console.error('CD image or tooltip element not found.');
-        return;
-      }
-    
-      // Function to toggle radio (playlist) playback
-      function toggleRadio() {
-        if (radioAudio.paused) {
-          radioAudio.play().then(() => {
-            cdImage.src = 'cd.gif'; // Spinning CD animation
-            cdImage.alt = 'Radio On';
-            cdTooltip.textContent = 'Radio On';
-            cdImage.classList.add('active'); // Add the 'active' class
-          }).catch(err => {
-            console.error('Playlist play error:', err);
+        // Animation loop for the carousel
+      
+        function animateCarousel() {
+          requestAnimationFrame(animateCarousel);
+          
+          // Update the raycaster
+          raycasterCarousel.setFromCamera(mouseCarousel, carouselCamera);
+          
+          // Calculate objects intersecting the picking ray
+          const intersects = raycasterCarousel.intersectObjects(carouselGroup.children, true);
+          
+          if (intersects.length > 0) {
+            const intersectedObject = intersects[0].object;
+            
+            // Find the top-level model object
+            let model = intersectedObject;
+            while (model.parent && model.parent !== carouselGroup) {
+              model = model.parent;
+            }
+            
+            if (hoveredCarouselModel !== model) {
+              // Reset previous hovered model position
+              if (hoveredCarouselModel) {
+                hoveredCarouselModel.position.y = hoveredCarouselModel.userData.originalY || 0;
+              }
+              
+              hoveredCarouselModel = model;
+              
+              // Store original Y position if not already stored
+              if (!hoveredCarouselModel.userData.originalY) {
+                hoveredCarouselModel.userData.originalY = hoveredCarouselModel.position.y;
+              }
+              
+              // Pause carousel rotation
+              isCarouselPaused = true;
+            }
+            
+            // Change cursor to pointer
+            carouselRenderer.domElement.style.cursor = 'pointer';
+          } else {
+            // No intersections
+            if (hoveredCarouselModel) {
+              // Reset position
+              hoveredCarouselModel.position.y = hoveredCarouselModel.userData.originalY || 0;
+              hoveredCarouselModel = null;
+            }
+            
+            // Resume carousel rotation
+            isCarouselPaused = false;
+            
+            // Change cursor back to default
+            carouselRenderer.domElement.style.cursor = 'default';
+          }
+          
+          // Animate model raising up smoothly
+          if (hoveredCarouselModel) {
+            const targetY = hoveredCarouselModel.userData.originalY + 50; // Raise by 50 units
+            hoveredCarouselModel.position.y += (targetY - hoveredCarouselModel.position.y) * 0.1;
+          }
+          
+          // Smoothly transition other models back down
+          carouselGroup.children.forEach((model) => {
+            if (model !== hoveredCarouselModel && model.userData.originalY !== undefined) {
+              model.position.y += (model.userData.originalY - model.position.y) * 0.1;
+            }
           });
-        } else {
-          radioAudio.pause();
-          cdImage.src = 'cd.png';
-          cdImage.alt = 'Radio Off';
-          cdTooltip.textContent = 'Radio Off';
-          cdImage.classList.remove('active'); // Remove the 'active' class
+          
+          // Rotate the carousel if not paused
+          if (!isCarouselPaused) {
+            // Smoothly transition to the target angle
+            carouselAngle += (carouselTargetAngle - carouselAngle) * carouselRotationSpeed;
+          }
+          
+          carouselGroup.rotation.y = carouselAngle;
+          carouselRenderer.render(carouselScene, carouselCamera);
         }
-      }
-  
-      // Attach click event listener to the CD image
-      cdImage.addEventListener('click', toggleRadio);
-  
-      // Optional: Initialize tooltip content based on initial state
-      window.addEventListener('DOMContentLoaded', (event) => {
-        cdTooltip.textContent = radioAudio.paused ? 'Radio Off' : 'Radio On';
-      });
-    })();
-  </script>
-  <script>
-  (function() {
-    // Define the playlist array with your audio file paths
-    const playlist = [
-      'song1.mp3',
-      'song2.mp3',
-      'song3.mp3'
-      // Add more songs as needed
-    ];
-  
-    // Initialize the current track index
-    let currentTrackIndex = 0;
-  
-    // Create the Audio object without setting the source initially
-    const radioAudio = new Audio();
-    radioAudio.src = playlist[currentTrackIndex];
-    radioAudio.loop = false; // No looping individual tracks
-    radioAudio.autoplay = false; // User interaction required to play
-  
-    // Event listener for when a track ends
-    radioAudio.addEventListener('ended', function() {
-      // Select a random track index
-      let nextTrackIndex = Math.floor(Math.random() * playlist.length);
-      
-      // Optional: Prevent the same track from playing consecutively
-      if (playlist.length > 1) { // Ensure there are at least two tracks
-        while (nextTrackIndex === currentTrackIndex) {
-          nextTrackIndex = Math.floor(Math.random() * playlist.length);
-        }
-      }
-      
-      currentTrackIndex = nextTrackIndex; // Update the current track index
-      radioAudio.src = playlist[currentTrackIndex];
-      radioAudio.play().catch(err => {
-        console.error('Error playing next track:', err);
-      });
-    });
-  
-    // Get the CD image and tooltip elements
-    const cdImage = document.getElementById('bottom-right-image');
-    const cdTooltip = document.getElementById('cd-tooltip');
-  
-    if (!cdImage || !cdTooltip) {
-      console.error('CD image or tooltip element not found.');
-      return;
-    }
-  
-    // Function to toggle radio (playlist) playback
-    function toggleRadio() {
-      if (radioAudio.paused) {
-        radioAudio.play().then(() => {
-          cdImage.src = 'cd.gif'; // Spinning CD animation
-          cdImage.alt = 'Radio On';
-          cdTooltip.textContent = 'Radio On';
-          cdImage.classList.add('active'); // Add the 'active' class
-        }).catch(err => {
-          console.error('Playlist play error:', err);
+        
+        // Handle window resizing for the carousel
+        window.addEventListener('resize', function () {
+          carouselCamera.aspect = carouselContainer.clientWidth / carouselContainer.clientHeight;
+          carouselCamera.updateProjectionMatrix();
+          carouselRenderer.setSize(carouselContainer.clientWidth, carouselContainer.clientHeight);
         });
-      } else {
-        radioAudio.pause();
-        cdImage.src = 'cd.png';
-        cdImage.alt = 'Radio Off';
-        cdTooltip.textContent = 'Radio Off';
-        cdImage.classList.remove('active'); // Remove the 'active' class
-      }
-    }
-
-    // Attach click event listener to the CD image
-    cdImage.addEventListener('click', toggleRadio);
-
-    // Optional: Initialize tooltip content based on initial state
-    window.addEventListener('DOMContentLoaded', (event) => {
-      cdTooltip.textContent = radioAudio.paused ? 'Radio Off' : 'Radio On';
-    });
-  })();
-</script>
-</body>
+        
+        // Event listener for keyboard arrow key navigation
+        document.addEventListener('keydown', function(event) {
+          if (event.key === 'ArrowRight') {
+            carouselTargetAngle -= Math.PI / 4;
+          } else if (event.key === 'ArrowLeft') {
+            carouselTargetAngle += Math.PI / 4;
+          }
+        });
+        
+        // Automatic rotation
+        setInterval(() => {
+          carouselTargetAngle -= Math.PI / 4;
+        }, 6000);
+        
+        // Start the carousel animation
+        animateCarousel();
+        
+        // Tooltip Elements
+        const nettspendTooltip = document.getElementById('nettspend-tooltip');
+        const bottomLeftImage = document.getElementById('bottom-left-image');
+        
+        // Event listeners for the Nett Spend image
+        bottomLeftImage.addEventListener('mouseenter', showTooltipNettSpend);
+        bottomLeftImage.addEventListener('mousemove', moveTooltipNettSpend);
+        bottomLeftImage.addEventListener('mouseleave', hideTooltipNettSpend);
+        
+        function showTooltipNettSpend(event) {
+          nettspendTooltip.textContent = 'BAFK.com';
+          nettspendTooltip.style.opacity = '1'; // Show the tooltip
+          positionTooltipNettSpend(event);
+        }
+        
+        function moveTooltipNettSpend(event) {
+          if (nettspendTooltip.style.opacity === '1') {
+            positionTooltipNettSpend(event);
+          }
+        }
+        
+        function positionTooltipNettSpend(event) {
+          const tooltipWidth = nettspendTooltip.offsetWidth;
+          const tooltipHeight = nettspendTooltip.offsetHeight;
+          const pageWidth = window.innerWidth;
+          const pageHeight = window.innerHeight;
+          
+          let tooltipX = event.clientX + 10; // 10px to the right of the cursor
+          let tooltipY = event.clientY - tooltipHeight - 10; // 10px above the cursor
+          // Prevent tooltip from going off the right edge
+          if (tooltipX + tooltipWidth > pageWidth) {
+            tooltipX = event.clientX - tooltipWidth - 10;
+          }
+          
+          // Prevent tooltip from going above the top edge
+          if (tooltipY < 0) {
+            tooltipY = event.clientY + 10;
+          }
+          
+          nettspendTooltip.style.left = tooltipX + 'px';
+          nettspendTooltip.style.top = tooltipY + 'px';
+        }
+        
+        function hideTooltipNettSpend() {
+          nettspendTooltip.style.opacity = '0'; // Hide the tooltip
+          }
+          
+          /*************************************
+           * * LOGO TOOLTIP LOGIC
+           * *************************************/
+          // Grab the existing tooltip element for the logo
+          const logoTooltip = document.getElementById('logo-tooltip');
+          
+          // Modify your onLogoMouseMove function to show/hide the tooltip
+          function onLogoMouseMove(event) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouseLogo.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouseLogo.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            
+            raycasterLogo.setFromCamera(mouseLogo, camera);
+            
+            let intersects = [];
+            if (logoModel) {
+              intersects = raycasterLogo.intersectObject(logoModel, true);
+            }
+            
+            // Change cursor
+            renderer.domElement.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
+            
+            // === SHOW/HIDE TOOLTIP FOR THE LOGO ===
+            if (intersects.length > 0) {
+              showTooltipLogo(event.clientX, event.clientY, 'Home');
+            } else {
+              hideTooltipLogo();
+            }
+          }
+          
+          // Show the tooltip near the mouse cursor
+          function showTooltipLogo(x, y, text) {
+            logoTooltip.textContent = text;
+            // Position the tooltip a bit offset from the cursor
+            logoTooltip.style.left = (x + 10) + 'px';
+            logoTooltip.style.top = (y) + 'px';
+            logoTooltip.style.opacity = '1';
+          }
+          
+          function hideTooltipLogo() {
+            logoTooltip.style.opacity = '0';
+          }
+          
+          /*************************************
+           * * CD TOOLTIP LOGIC
+           * *************************************/
+          // Grab the existing tooltip element for the CD
+          const cdTooltip = document.getElementById('cd-tooltip');
+          // Get the CD image element
+          const bottomRightImage = document.getElementById('bottom-right-image');
+          
+          if (bottomRightImage) {
+            bottomRightImage.addEventListener('mouseenter', showTooltipCD);
+            bottomRightImage.addEventListener('mousemove', moveTooltipCD);
+            bottomRightImage.addEventListener('mouseleave', hideTooltipCD);
+          }
+          
+          function showTooltipCD(event) {
+            cdTooltip.textContent = 'Radio Off'; // or conditionally check bottomRightImage.alt if needed
+            cdTooltip.style.opacity = '1';
+            positionTooltipCD(event);
+          }
+          
+          function moveTooltipCD(event) {
+            if (cdTooltip.style.opacity === '1') {
+              positionTooltipCD(event);
+            }
+          }
+          
+          function positionTooltipCD(event) {
+            const tooltipWidth = cdTooltip.offsetWidth;
+            const tooltipHeight = cdTooltip.offsetHeight;
+            const pageWidth = window.innerWidth;
+            const pageHeight = window.innerHeight;
+            
+            let tooltipX = event.clientX + 10; // Offset horizontally
+            let tooltipY = event.clientY - tooltipHeight - 10; // Offset vertically above cursor
+            
+            // Prevent tooltip from going off the right edge
+            if (tooltipX + tooltipWidth > pageWidth) {
+              tooltipX = event.clientX - tooltipWidth - 10;
+            }
+            // Prevent tooltip from going above the top edge
+            if (tooltipY < 0) {
+              tooltipY = event.clientY + 10;
+            }
+            
+            cdTooltip.style.left = tooltipX + 'px';
+            cdTooltip.style.top = tooltipY + 'px';
+          }
+          
+          function hideTooltipCD() {
+            cdTooltip.style.opacity = '0';
+          }
+          
+          </script>
+          <script>
+          (function() {
+            // Define the playlist array with your audio file paths
+            const playlist = [
+              '/music/song1.mp3',
+              '/music/song2.mp3',
+              '/music/song3.mp3'
+              // Add more songs as needed
+            ];
+            
+            // Initialize the current track index
+            let currentTrackIndex = 0;
+            
+            // Create the Audio object without setting the source initially
+            const radioAudio = new Audio();
+            radioAudio.src = playlist[currentTrackIndex];
+            radioAudio.loop = false; // No looping individual tracks
+            radioAudio.autoplay = false; // User interaction required to play
+            
+            // Event listener for when a track ends
+            radioAudio.addEventListener('ended', function() {
+              // Select a random track index
+              let nextTrackIndex = Math.floor(Math.random() * playlist.length);
+              
+              // Optional: Prevent the same track from playing consecutively
+              if (playlist.length > 1) { // Ensure there are at least two tracks
+              while (nextTrackIndex === currentTrackIndex) {
+                nextTrackIndex = Math.floor(Math.random() * playlist.length);
+              }
+            }
+            
+            currentTrackIndex = nextTrackIndex; // Update the current track index
+            radioAudio.src = playlist[currentTrackIndex];
+            radioAudio.play().catch(err => {
+              console.error('Error playing next track:', err);
+            });
+          });
+          
+          // Get the CD image and tooltip elements
+          const cdImage = document.getElementById('bottom-right-image');
+          const cdTooltip = document.getElementById('cd-tooltip');
+          
+          if (!cdImage || !cdTooltip) {
+            console.error('CD image or tooltip element not found.');
+            return;
+          }
+          
+          // Function to toggle radio (playlist) playback
+          function toggleRadio() {
+            if (radioAudio.paused) {
+              radioAudio.play().then(() => {
+                cdImage.src = '/assets/cd.gif'; // Spinning CD animation
+                cdImage.alt = 'Radio On';
+                cdTooltip.textContent = 'Radio On';
+                cdImage.classList.add('active'); // Add the 'active' class
+                }).catch(err => {
+                  console.error('Playlist play error:', err);
+                });
+              } else {
+                radioAudio.pause();
+                cdImage.src = '/assets/cd.png';
+                cdImage.alt = 'Radio Off';
+                cdTooltip.textContent = 'Radio Off';
+                cdImage.classList.remove('active'); // Remove the 'active' class
+                }
+              }
+              
+              // Attach click event listener to the CD image
+              cdImage.addEventListener('click', toggleRadio);
+              
+              // Optional: Initialize tooltip content based on initial state
+              window.addEventListener('DOMContentLoaded', (event) => {
+                cdTooltip.textContent = radioAudio.paused ? 'Radio Off' : 'Radio On';
+              });
+            })();
+            </script>
+            <script>
+            (function() {
+              // Define the playlist array with your audio file paths
+              const playlist = [
+                '/music/song1.mp3',
+                '/music/song2.mp3',
+                '/music/song3.mp3'
+                // Add more songs as needed
+                ];
+                // Initialize the current track index
+                let currentTrackIndex = 0;
+                
+                // Create the Audio object without setting the source initially
+                const radioAudio = new Audio();
+                radioAudio.src = playlist[currentTrackIndex];
+                radioAudio.loop = false; // No looping individual tracks
+                radioAudio.autoplay = false; // User interaction required to play
+                
+                // Event listener for when a track ends
+                radioAudio.addEventListener('ended', function() {
+                  // Select a random track index
+                  let nextTrackIndex = Math.floor(Math.random() * playlist.length);
+                  
+                  // Optional: Prevent the same track from playing consecutively
+                  if (playlist.length > 1) { // Ensure there are at least two tracks
+                  while (nextTrackIndex === currentTrackIndex) {
+                    nextTrackIndex = Math.floor(Math.random() * playlist.length);
+                  }
+                }
+                
+                currentTrackIndex = nextTrackIndex; // Update the current track index
+                radioAudio.src = playlist[currentTrackIndex];
+                radioAudio.play().catch(err => {
+                  console.error('Error playing next track:', err);
+                });
+              });
+              
+              // Get the CD image and tooltip elements
+              const cdImage = document.getElementById('bottom-right-image');
+              const cdTooltip = document.getElementById('cd-tooltip');
+              
+              if (!cdImage || !cdTooltip) {
+                console.error('CD image or tooltip element not found.');
+                return;
+              }
+              
+              // Function to toggle radio (playlist) playback
+              function toggleRadio() {
+                if (radioAudio.paused) {
+                  radioAudio.play().then(() => {
+                    cdImage.src = '/assets/cd.gif'; // Spinning CD animation
+                    cdImage.alt = 'Radio On';
+                    cdTooltip.textContent = 'Radio On';
+                    cdImage.classList.add('active'); // Add the 'active' class
+                    }).catch(err => {
+                      console.error('Playlist play error:', err);
+                    });
+                  } else {
+                    radioAudio.pause();
+                    cdImage.src = '/assets/cd.png';
+                    cdImage.alt = 'Radio Off';
+                    cdTooltip.textContent = 'Radio Off';
+                    cdImage.classList.remove('active'); // Remove the 'active' class
+                    }
+                  }
+                  
+                  // Attach click event listener to the CD image
+                  cdImage.addEventListener('click', toggleRadio);
+                  
+                  // Optional: Initialize tooltip content based on initial state
+                  window.addEventListener('DOMContentLoaded', (event) => {
+                    cdTooltip.textContent = radioAudio.paused ? 'Radio Off' : 'Radio On';
+                  });
+                  
+                  /*************************************
+                   * POINTER EVENTS FOR CAROUSEL
+                   *************************************/
+                  
+                   // Variables to track pointer interactions
+                   let pointerStartX = 0;
+                   let pointerEndX = 0;
+                   let pointerStartY = 0;
+                   let pointerEndY = 0;
+                   const swipeThreshold = 50; // Minimum swipe distance in pixels to consider as a swipe
+                   let isTap = true;
+                   const tapThreshold = 10; // Maximum movement in pixels to consider as a tap
+                   
+                   // Add pointer event listeners to the carousel renderer's DOM element
+                   carouselRenderer.domElement.addEventListener('pointerdown', onPointerDown, false);
+                   carouselRenderer.domElement.addEventListener('pointermove', onPointerMove, false);
+                   carouselRenderer.domElement.addEventListener('pointerup', onPointerUp, false);
+                   
+                   // Prevent default touch actions to avoid scrolling when interacting with the carousel
+                   carouselRenderer.domElement.style.touchAction = 'none';
+                   
+                   // Pointer Down: Capture starting positions and reset states
+                   function onPointerDown(event) {
+                    if (event.pointerType === 'touch' || event.pointerType === 'mouse') {
+                      pointerStartX = event.clientX;
+                      pointerStartY = event.clientY;
+                      pointerEndX = pointerStartX;
+                      pointerEndY = pointerStartY;
+                      isTap = true; // Assume it's a tap until movement exceeds threshold
+                      }
+                    }
+                    
+                    // Pointer Move: Track movement and determine if it's a tap or swipe
+                    function onPointerMove(event) {
+                      if (event.pointerType === 'touch' || event.pointerType === 'mouse') {
+                        pointerEndX = event.clientX;
+                        pointerEndY = event.clientY;
+                        const moveX = Math.abs(pointerEndX - pointerStartX);
+                        const moveY = Math.abs(pointerEndY - pointerStartY);
+                        
+                        // If movement exceeds the tap threshold, it's no longer considered a tap
+                        if (moveX > tapThreshold || moveY > tapThreshold) {
+                          isTap = false;
+                        }
+                      }
+                    }
+                    
+                    // Pointer Up: Determine whether the interaction is a swipe or tap
+                    function onPointerUp(event) {
+                      const swipeDistanceX = pointerEndX - pointerStartX;
+                      const swipeDistanceY = pointerEndY - pointerStartY;
+                      
+                      if (!isTap) {
+                        // It's a swipe interaction
+                        if (Math.abs(swipeDistanceX) > swipeThreshold && Math.abs(swipeDistanceY) < swipeThreshold) {
+                          // Horizontal swipe detected
+                          if (swipeDistanceX < 0) {
+                            // Swiped left: Rotate carousel to the right
+                            carouselTargetAngle -= Math.PI / 4; // Adjust the rotation angle as needed
+                            } else {
+                              // Swiped right: Rotate carousel to the left
+                              carouselTargetAngle += Math.PI / 4; // Adjust the rotation angle as needed
+                              }
+                            }
+                          } else {
+                            // It's a tap interaction
+                            const rect = carouselRenderer.domElement.getBoundingClientRect();
+                            const normalizedMouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                            const normalizedMouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                            
+                            // Simulate a mouse click using raycaster
+                            raycasterCarousel.setFromCamera({ x: normalizedMouseX, y: normalizedMouseY }, carouselCamera);
+                            const intersects = raycasterCarousel.intersectObjects(carouselGroup.children, true);
+                            
+                            if (intersects.length > 0) {
+                              const clickedObject = intersects[0].object;
+                              
+                              // Traverse up to find the main model
+                              
+                              let model = clickedObject;
+                              while (model.parent && model.parent !== carouselGroup) {
+                                model = model.parent;
+                              }
+                              
+                              if (model.userData.url) {
+                                
+                                // Navigate to the associated URL
+                                window.location.href = model.userData.url;
+                              }
+                            }
+                          }
+                          
+                          // Reset variables for next interaction
+                          pointerStartX = 0;
+                          pointerEndX = 0;
+                          pointerStartY = 0;
+                          pointerEndY = 0;
+                          isTap = true;
+                        }
+                      
+                      })();
+            </script>
+    </body>
 </html>
