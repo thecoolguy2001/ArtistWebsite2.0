@@ -1,3 +1,6 @@
+---
+permalink: /about/
+---
 <!DOCTYPE html>
 <html>
 <head>
@@ -310,15 +313,15 @@
 
   <!-- Background Video -->
   <video autoplay muted loop playsinline id="background-video">
-    <source src="assets/video.mp4" type="video/mp4">
+    <source src="/assets/video.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
   <!-- Navigation Bar -->
   <nav class="navigation-bar">
-    <a href="about.html" class="active">About</a>
-    <a href="catalog.html">Catalog</a>
-    <a href="contact.html">Contact</a>
+    <a href="/about/" class="active">About</a>
+    <a href="/catalog/">Catalog</a>
+    <a href="/contact/">Contact</a>
   </nav>
 
   <!-- Logo Container -->
@@ -345,13 +348,13 @@
   </div>
 
   <!-- Bottom Right Image (CD) -->
-  <img id="bottom-right-image" src="assets/cd.png" alt="Radio Off">
+  <img id="bottom-right-image" src="/assets/cd.png" alt="Radio Off">
 
   <!-- Tooltip for CD Image -->
   <div id="cd-tooltip" class="tooltip">Radio Off</div>
 
   <!-- Bottom Left Image (CV) -->
-  <img id="bottom-left-image" src="assets/cv.png" alt="View CV">
+  <img id="bottom-left-image" src="/assets/cv.png" alt="View CV">
 
   <!-- Tooltip for CV Image -->
   <div id="cv-tooltip" class="tooltip">View CV</div>
@@ -362,7 +365,7 @@
   
       if (isMobile) {
         // Find the Catalog link in the navigation bar
-        const catalogLink = document.querySelector(".navigation-bar a[href='catalog.html']");
+        const catalogLink = document.querySelector(".navigation-bar a[href='/catalog/']");
   
         // Change the href attribute to point to port12.html
         if (catalogLink) {
@@ -409,7 +412,7 @@
       // Load the logo model
       const logoLoader = new THREE.GLTFLoader();
       logoLoader.load(
-        'models/logo.v2.glb',
+        '/models/logo.v2.glb',
         function(gltf) {
           logoModel = gltf.scene;
           logoModel.traverse((child) => {
@@ -547,7 +550,7 @@
 
       // Load the eye model
       loader.load(
-        'models/Heavenly_Guardians_1213052528_generate.glb',
+        '/models/Heavenly_Guardians_1213052528_generate.glb',
         function (gltf) {
           object = gltf.scene;
 
@@ -695,7 +698,7 @@ radioAudio.addEventListener('ended', function() {
   function toggleRadio() {
     if (radioAudio.paused) {
       radioAudio.play().then(() => {
-        cdImage.src = 'assets/cd.gif'; // Spinning CD animation
+        cdImage.src = '/assets/cd.gif'; // Spinning CD animation
         cdImage.alt = 'Radio On';
         cdTooltip.textContent = 'Radio On';
         cdImage.classList.add('active'); // Add the 'active' class
@@ -704,7 +707,7 @@ radioAudio.addEventListener('ended', function() {
       });
     } else {
       radioAudio.pause();
-      cdImage.src = 'assets/cd.png';
+      cdImage.src = '/assets/cd.png';
       cdImage.alt = 'Radio Off';
       cdTooltip.textContent = 'Radio Off';
       cdImage.classList.remove('active'); // Remove the 'active' class
@@ -830,7 +833,7 @@ radioAudio.addEventListener('ended', function() {
 
       // Function to open the CV PDF in a new tab when the image is clicked
       function openCVInNewTab() {
-        window.open('assets/cv.pdf', '_blank'); // Ensure 'cv.pdf' is correctly placed in your server
+        window.open('/assets/cv.pdf', '_blank'); // Ensure 'cv.pdf' is correctly placed in your server
       }
     });
   </script>

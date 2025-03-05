@@ -1,3 +1,6 @@
+---
+permalink: /catalog/
+---
 <!DOCTYPE html>
 <html>
 <head>
@@ -211,23 +214,23 @@
 </head>
 <body>
   <video autoplay muted loop id="background-video">
-    <source src="assets/video.mp4" type="video/mp4">
+    <source src="/assets/video.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
   <div id="model-container"></div>
 
   <nav class="navigation-bar">
-    <a href="about.html">About</a>
-    <a href="catalog.html" class="active">Catalog</a>
-    <a href="contact.html">Contact</a>
+    <a href="/about/">About</a>
+    <a href="/catalog/" class="active">Catalog</a>
+    <a href="/contact/">Contact</a>
   </nav>
 
  
 
   <div id="grid-container"></div>
   <!-- Bottom Right Image -->
-  <img id="bottom-right-image" src="assets/cd.png" alt="Description">
+  <img id="bottom-right-image" src="/assets/cd.png" alt="Description">
 
   <!-- Tooltip for Logo -->
 <div id="logo-tooltip" class="tooltip">Home</div>
@@ -241,7 +244,7 @@
 
     if (isMobile) {
       // Find the Catalog link in the navigation bar
-      const catalogLink = document.querySelector(".navigation-bar a[href='catalog.html']");
+      const catalogLink = document.querySelector(".navigation-bar a[href='/contact/']");
 
       // Change the href attribute to point to port12.html
       if (catalogLink) {
@@ -296,34 +299,34 @@
 
 // Update the models link from the bottom being the oldest and the top being newest
     const modelPaths = [
-      'models/painting_rejoicehewillprovide/scene.gltf',
-      'models/painting_reflection/scene.gltf',
-      'models/painting_perseverance/scene.gltf',
-      'models/painting_hell/scene.gltf',
-      'models/painting_goodbye/scene.gltf',
-      'models/painting_feelingbloom/scene.gltf',
-      'models/painting_faith/scene.gltf',
-      'models/painting_eternalyouth/scene.gltf',
-      'models/painting_deathofself/scene.gltf',
-      'models/painting_starryknight/scene.gltf',
-      'models/painting_selfportrait/scene.gltf',
-      'models/painting_unrequitedlove/scene.gltf',
+      '/models/painting_rejoicehewillprovide/scene.gltf',
+      '/models/painting_reflection/scene.gltf',
+      '/models/painting_perseverance/scene.gltf',
+      '/models/painting_hell/scene.gltf',
+      '/models/painting_goodbye/scene.gltf',
+      '/models/painting_feelingbloom/scene.gltf',
+      '/models/painting_faith/scene.gltf',
+      '/models/painting_eternalyouth/scene.gltf',
+      '/models/painting_deathofself/scene.gltf',
+      '/models/painting_starryknight/scene.gltf',
+      '/models/painting_selfportrait/scene.gltf',
+      '/models/painting_unrequitedlove/scene.gltf',
     ];
 
 // Update the models link from the bottom being the newest and the top being oldest.
     function getModelURL(modelPath) {
-      if (modelPath.includes('models/painting_unrequitedlove')) return 'catalog/1.html';
-      else if (modelPath.includes('models/painting_selfportrait')) return 'catalog/2.html';
-      else if (modelPath.includes('models/painting_starryknight')) return 'catalog/3.html';
-      else if (modelPath.includes('models/painting_deathofself')) return 'catalog/4.html';
-      else if (modelPath.includes('models/painting_eternalyouth')) return 'catalog/5.html';
-      else if (modelPath.includes('models/painting_faith')) return 'catalog/6.html';
-      else if (modelPath.includes('models/painting_feelingbloom')) return 'catalog/7.html';
-      else if (modelPath.includes('models/painting_goodbye')) return 'catalog/8.html';
-      else if (modelPath.includes('models/painting_hell')) return 'catalog/9.html';
-      else if (modelPath.includes('models/painting_perseverance')) return 'catalog/10.html';
-      else if (modelPath.includes('models/painting_reflection')) return 'catalog/11.html';
-      else if (modelPath.includes('models/painting_rejoicehewillprovide')) return 'catalog/12.html';
+      if (modelPath.includes('/models/painting_unrequitedlove')) return '/catalog/1.html';
+      else if (modelPath.includes('/models/painting_selfportrait')) return '/catalog/2.html';
+      else if (modelPath.includes('/models/painting_starryknight')) return '/catalog/3.html';
+      else if (modelPath.includes('/models/painting_deathofself')) return '/catalog/4.html';
+      else if (modelPath.includes('/models/painting_eternalyouth')) return '/catalog/5.html';
+      else if (modelPath.includes('/models/painting_faith')) return '/catalog/6.html';
+      else if (modelPath.includes('/models/painting_feelingbloom')) return '/catalog/7.html';
+      else if (modelPath.includes('/models/painting_goodbye')) return '/catalog/8.html';
+      else if (modelPath.includes('/models/painting_hell')) return '/catalog/9.html';
+      else if (modelPath.includes('/models/painting_perseverance')) return '/catalog/10.html';
+      else if (modelPath.includes('/models/painting_reflection')) return '/catalog/11.html';
+      else if (modelPath.includes('/models/painting_rejoicehewillprovide')) return '/catalog/12.html';
       return '#';
     }
 
@@ -725,7 +728,7 @@ function hideLogoTooltip() {
     function toggleRadio() {
       if (radioAudio.paused) {
         radioAudio.play().then(() => {
-          cdImage.src = 'assets/cd.gif'; // Spinning CD animation
+          cdImage.src = '/assets/cd.gif'; // Spinning CD animation
           cdImage.alt = 'Radio On';
           cdTooltip.textContent = 'Radio On';
           cdImage.classList.add('active'); // Add the 'active' class
@@ -734,7 +737,7 @@ function hideLogoTooltip() {
         });
       } else {
         radioAudio.pause();
-        cdImage.src = 'assets/cd.png';
+        cdImage.src = '/assets/cd.png';
         cdImage.alt = 'Radio Off';
         cdTooltip.textContent = 'Radio Off';
         cdImage.classList.remove('active'); // Remove the 'active' class

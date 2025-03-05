@@ -277,9 +277,9 @@ permalink: /contact/
 </video>
   
   <nav class="navigation-bar">
-    <a href="about.html">About</a>
-    <a href="catalog.html">Catalog</a>
-    <a href="contact.html" class="active">Contact</a>
+    <a href="/about/">About</a>
+    <a href="/catalog/">Catalog</a>
+    <a href="/contact/" class="active">Contact</a>
   </nav>
   <!-- Logo Container -->
   <div id="logo-container"></div>
@@ -316,7 +316,7 @@ permalink: /contact/
 
     if (isMobile) {
       // Find the Catalog link in the navigation bar
-      const catalogLink = document.querySelector(".navigation-bar a[href='catalog.html']");
+      const catalogLink = document.querySelector(".navigation-bar a[href='/catalog/']");
 
       // Change the href attribute to point to port12.html
       if (catalogLink) {
