@@ -1,3 +1,6 @@
+---
+permalink: /catalog/3
+---
 <!DOCTYPE html>
 <html>
 <head>
@@ -566,11 +569,11 @@
 <div id="cd-tooltip" class="tooltip">Radio Off</div>
 
 
-  <a href="/catalog/2.html" class="next-page-button" aria-label="Next Portfolio Page" title="Next">
+  <a href="/catalog/2" class="next-page-button" aria-label="Next Portfolio Page" title="Next">
     &#8594;
   </a>
 
-  <a href="/catalog/4.html" class="back-page-button" aria-label="Back Portfolio Page" title="Back">
+  <a href="/catalog/4" class="back-page-button" aria-label="Back Portfolio Page" title="Back">
     &#8592;
   </a>
   <script>
@@ -580,11 +583,11 @@
   
       if (isMobile) {
         // Find the Catalog link in the navigation bar
-        const catalogLink = document.querySelector(".navigation-bar a[href='/catalog.html']");
+        const catalogLink = document.querySelector(".navigation-bar a[href='/catalog/']");
   
         // Change the href attribute to point to port12.html
         if (catalogLink) {
-          catalogLink.setAttribute('href', '/catalog/12.html');
+          catalogLink.setAttribute('href', '/catalog/12');
         }
       }
     });

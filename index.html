@@ -270,7 +270,7 @@
         const catalogLink = document.querySelector(".navigation-bar a[href='/catalog/']");
         // Change the href attribute to point to port13.html
         if (catalogLink) {
-          catalogLink.setAttribute('href', '/catalog/12.html');
+          catalogLink.setAttribute('href', '/catalog/12');
         }
       }
       });
@@ -354,7 +354,7 @@
           
           if (intersects.length > 0) {
             // Redirect to homepage
-            window.location.href = 'index.html';
+            window.location.href = '/';
           }
         }
       }
@@ -490,22 +490,22 @@
                 object.position.z += z;
                 
                 // Assign URLs for models
-                if (modelPath.includes('tshirt')) {
-                  object.userData.url = '/catalog/13.html';
-                } else if (modelPath.includes('painting_rejoicehewillprovide')) {
-                  object.userData.url = '/catalog/12.html';
+                if (modelPath.includes('painting_rejoicehewillprovide')) {
+                  object.userData.url = '/catalog/12';
                 } else if (modelPath.includes('painting_reflection')) {
-                  object.userData.url = '/catalog/11.html';
+                  object.userData.url = '/catalog/11';
                 } else if (modelPath.includes('painting_perseverance')) {
-                  object.userData.url = '/catalog/10.html';
+                  object.userData.url = '/catalog/10';
                 } else if (modelPath.includes('painting_hell')) {
-                  object.userData.url = '/catalog/9.html';
+                  object.userData.url = '/catalog/9';
                 } else if (modelPath.includes('painting_goodbye')) {
-                  object.userData.url = '/catalog/8.html';
+                  object.userData.url = '/catalog/8';
                 } else if (modelPath.includes('painting_feelingbloom')) {
-                  object.userData.url = '/catalog/7.html';
+                  object.userData.url = '/catalog/7';
                 } else if (modelPath.includes('painting_faith')) {
-                  object.userData.url = '/catalog/6.html';
+                  object.userData.url = '/catalog/6';
+                } else if (modelPath.includes('painting_eternalyouth')) {
+                  object.userData.url = '/catalog/5';
                 }
                 // Add more models and URLs as needed
                  

@@ -320,7 +320,7 @@ permalink: /contact/
 
       // Change the href attribute to point to port12.html
       if (catalogLink) {
-        catalogLink.setAttribute('href', '/catalog/12.html');
+        catalogLink.setAttribute('href', '/catalog/12');
       }
     }
   });
@@ -420,7 +420,7 @@ permalink: /contact/
       if(logoModel){
         const intersects = logoRaycaster.intersectObject(logoModel,true);
         if(intersects.length>0){
-          window.location.href='index.html';
+          window.location.href='/';
         }
       }
     }

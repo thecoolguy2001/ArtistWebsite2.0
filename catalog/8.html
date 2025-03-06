@@ -413,9 +413,9 @@
 
   <!-- Navigation Bar -->
   <nav class="navigation-bar">
-    <a href="/about.html">About</a>
-    <a href="/catalog.html">Catalog</a>
-    <a href="/contact.html">Contact</a>
+    <a href="/about/">About</a>
+    <a href="/catalog/">Catalog</a>
+    <a href="/contact/">Contact</a>
   </nav>
 
   <!-- Logo Container -->
@@ -566,11 +566,11 @@
 <div id="cd-tooltip" class="tooltip">Radio Off</div>
 
 
-  <a href="/catalog/7.html" class="next-page-button" aria-label="Next Portfolio Page" title="Next">
+  <a href="/catalog/7" class="next-page-button" aria-label="Next Portfolio Page" title="Next">
     &#8594;
   </a>
 
-  <a href="/catalog/9.html" class="back-page-button" aria-label="Back Portfolio Page" title="Back">
+  <a href="/catalog/9" class="back-page-button" aria-label="Back Portfolio Page" title="Back">
     &#8592;
   </a>
   <script>
@@ -580,11 +580,11 @@
   
       if (isMobile) {
         // Find the Catalog link in the navigation bar
-        const catalogLink = document.querySelector(".navigation-bar a[href='/catalog.html']");
+        const catalogLink = document.querySelector(".navigation-bar a[href='/catalog/']");
   
         // Change the href attribute to point to port12.html
         if (catalogLink) {
-          catalogLink.setAttribute('href', '/catalog/12.html');
+          catalogLink.setAttribute('href', '/catalog/12');
         }
       }
     });
@@ -659,7 +659,7 @@ const mouse = new THREE.Vector2();
       if(logoModel){
         const intersects = logoRaycaster.intersectObject(logoModel,true);
         if(intersects.length>0){
-          window.location.href='index.html';
+          window.location.href='/';
         }
       }
     }

@@ -248,7 +248,7 @@ permalink: /catalog/
 
       // Change the href attribute to point to port12.html
       if (catalogLink) {
-        catalogLink.setAttribute('href', '/catalog/12.html');
+        catalogLink.setAttribute('href', '/catalog/12');
       }
     }
   });
@@ -315,18 +315,18 @@ permalink: /catalog/
 
 // Update the models link from the bottom being the newest and the top being oldest.
     function getModelURL(modelPath) {
-      if (modelPath.includes('/models/painting_unrequitedlove')) return '/catalog/1.html';
-      else if (modelPath.includes('/models/painting_selfportrait')) return '/catalog/2.html';
-      else if (modelPath.includes('/models/painting_starryknight')) return '/catalog/3.html';
-      else if (modelPath.includes('/models/painting_deathofself')) return '/catalog/4.html';
-      else if (modelPath.includes('/models/painting_eternalyouth')) return '/catalog/5.html';
-      else if (modelPath.includes('/models/painting_faith')) return '/catalog/6.html';
-      else if (modelPath.includes('/models/painting_feelingbloom')) return '/catalog/7.html';
-      else if (modelPath.includes('/models/painting_goodbye')) return '/catalog/8.html';
-      else if (modelPath.includes('/models/painting_hell')) return '/catalog/9.html';
-      else if (modelPath.includes('/models/painting_perseverance')) return '/catalog/10.html';
-      else if (modelPath.includes('/models/painting_reflection')) return '/catalog/11.html';
-      else if (modelPath.includes('/models/painting_rejoicehewillprovide')) return '/catalog/12.html';
+      if (modelPath.includes('/models/painting_unrequitedlove')) return '/catalog/1';
+      else if (modelPath.includes('/models/painting_selfportrait')) return '/catalog/2';
+      else if (modelPath.includes('/models/painting_starryknight')) return '/catalog/3';
+      else if (modelPath.includes('/models/painting_deathofself')) return '/catalog/4';
+      else if (modelPath.includes('/models/painting_eternalyouth')) return '/catalog/5';
+      else if (modelPath.includes('/models/painting_faith')) return '/catalog/6';
+      else if (modelPath.includes('/models/painting_feelingbloom')) return '/catalog/7';
+      else if (modelPath.includes('/models/painting_goodbye')) return '/catalog/8';
+      else if (modelPath.includes('/models/painting_hell')) return '/catalog/9';
+      else if (modelPath.includes('/models/painting_perseverance')) return '/catalog/10';
+      else if (modelPath.includes('/models/painting_reflection')) return '/catalog/11';
+      else if (modelPath.includes('/models/painting_rejoicehewillprovide')) return '/catalog/12';
       return '#';
     }
 
@@ -537,7 +537,7 @@ permalink: /catalog/
 
     const logoLoader = new GLTFLoader();
     logoLoader.load(
-      'models/logo.v2.glb',
+      '/models/logo.v2.glb',
       function(gltf) {
         logoModel = gltf.scene;
         logoModel.traverse((child)=>{
@@ -566,7 +566,7 @@ permalink: /catalog/
       if(logoModel){
         const intersects = logoRaycaster.intersectObject(logoModel,true);
         if(intersects.length>0){
-          window.location.href='index.html';
+          window.location.href='/';
         }
       }
     }
