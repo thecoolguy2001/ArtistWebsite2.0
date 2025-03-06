@@ -360,176 +360,164 @@ permalink: /contact/
         });
       });
     });
-    // Wait for the DOM to be fully loaded
     window.addEventListener('load', function() {
-      // === Spinning Logo Code ===
-
-      // Create the scene for the logo
-      const logoScene = new THREE.Scene();
-
-      // Set up the camera for the logo
-      const logoCamera = new THREE.PerspectiveCamera(80, 1, 0.1, 1000);
-      logoCamera.position.z = 1;
-
-      // Create the renderer for the logo
-      const logoRenderer = new THREE.WebGLRenderer({ alpha: true });
-      logoRenderer.setSize(100, 100);
-      logoRenderer.setPixelRatio(window.devicePixelRatio);
-      document.getElementById('logo-container').appendChild(logoRenderer.domElement);
-
-      // Add lights to the logo scene
-      const logoAmbientLight = new THREE.AmbientLight(0xffffff, 0.8); // Soft white light
-      logoScene.add(logoAmbientLight);
-
-      const logoDirectionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-      logoDirectionalLight.position.set(5, 10, 7.5); // Adjust position as needed
-      logoScene.add(logoDirectionalLight);
-
-      // Variable to hold the logo model
-      const logoRaycaster = new THREE.Raycaster();
-    const logoMouse = new THREE.Vector2();
-      let logoModel;
-
-      // Load the logo model
-      const logoLoader = new THREE.GLTFLoader();
-      logoLoader.load(
-        '/models/logo.v2.glb',
-        function(gltf) {
-        logoModel = gltf.scene;
-        logoModel.traverse((child)=>{
-          if(child.isMesh) {
-            child.material.side = THREE.DoubleSide;
-            child.material.needsUpdate = true;
+  // === Spinning Logo Code ===
+  const logoScene = new THREE.Scene();
+  const logoCamera = new THREE.PerspectiveCamera(80, 1, 0.1, 1000);
+  logoCamera.position.z = 1;
+  
+  const logoRenderer = new THREE.WebGLRenderer({ alpha: true });
+  logoRenderer.setSize(100, 100);
+  logoRenderer.setPixelRatio(window.devicePixelRatio);
+  document.getElementById('logo-container').appendChild(logoRenderer.domElement);
+  
+  const logoAmbientLight = new THREE.AmbientLight(0xffffff, 0.8);
+  logoScene.add(logoAmbientLight);
+  
+  const logoDirectionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  logoDirectionalLight.position.set(5, 10, 7.5);
+  logoScene.add(logoDirectionalLight);
+  
+  const logoRaycaster = new THREE.Raycaster();
+  const logoMouse = new THREE.Vector2();
+  let logoModel;
+  
+  const logoLoader = new THREE.GLTFLoader();
+  logoLoader.load(
+    '/models/logo.v2.glb',
+    function(gltf) {
+      logoModel = gltf.scene;
+      logoModel.traverse(child => {
+        if (child.isMesh) {
+          child.material.side = THREE.DoubleSide;
+          child.material.needsUpdate = true;
+        }
+      });
+      logoScene.add(logoModel);
+    },
+    undefined,
+    function(error) {
+      console.error('Error loading logo model:', error);
+    }
+  );
+  
+  // Logo click event
+  logoRenderer.domElement.addEventListener('click', function(event) {
+    const rect = logoRenderer.domElement.getBoundingClientRect();
+    logoMouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    logoMouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    logoRaycaster.setFromCamera(logoMouse, logoCamera);
+    if (logoModel) {
+      const intersects = logoRaycaster.intersectObject(logoModel, true);
+      if (intersects.length > 0) {
+        window.location.href = '/';
+      }
+    }
+  }, false);
+  
+  // Animation loop for the logo
+  function animateLogo() {
+    requestAnimationFrame(animateLogo);
+    if (logoModel) {
+      logoModel.rotation.y += 0.01;
+    }
+    logoRenderer.render(logoScene, logoCamera);
+  }
+  animateLogo();
+  
+  // === Logo Tooltip Logic (moved inside the load callback) ===
+  const logoTooltip = document.getElementById('logo-tooltip');
+  
+  // Bind mousemove event to the logo renderer's canvas
+  logoRenderer.domElement.addEventListener('mousemove', onLogoMouseMove, false);
+  
+  function onLogoMouseMove(event) {
+    // Calculate mouse position relative to the logo renderer's DOM element
+    const rect = logoRenderer.domElement.getBoundingClientRect();
+    logoMouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    logoMouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+  
+    // Update the raycaster with the logo camera and computed mouse coordinates
+    logoRaycaster.setFromCamera(logoMouse, logoCamera);
+  
+    // Check if the logo model is intersected
+    let intersects = [];
+    if (logoModel) {
+      intersects = logoRaycaster.intersectObject(logoModel, true);
+    }
+  
+    // If an intersection is detected, show the tooltip and change the cursor
+    if (intersects.length > 0) {
+      logoRenderer.domElement.style.cursor = 'pointer';
+      showTooltip(event.clientX, event.clientY, 'Home');
+    } else {
+      logoRenderer.domElement.style.cursor = 'default';
+      hideTooltip();
+    }
+  }
+  
+  function showTooltip(x, y, text) {
+    logoTooltip.textContent = text;
+    logoTooltip.style.left = (x + 10) + 'px';
+    logoTooltip.style.top = y + 'px';
+    logoTooltip.style.opacity = '1';
+  }
+  
+  function hideTooltip() {
+    logoTooltip.style.opacity = '0';
+  }
+});
+          /*************************************
+           * * CD TOOLTIP LOGIC
+           * *************************************/
+          // Grab the existing tooltip element for the CD
+          const cdTooltip = document.getElementById('cd-tooltip');
+          // Get the CD image element
+          const bottomRightImage = document.getElementById('bottom-right-image');
+          
+          if (bottomRightImage) {
+            bottomRightImage.addEventListener('mouseenter', showTooltipCD);
+            bottomRightImage.addEventListener('mousemove', moveTooltipCD);
+            bottomRightImage.addEventListener('mouseleave', hideTooltipCD);
           }
-        });
-        logoScene.add(logoModel);
-      },
-      undefined,
-      function(error){
-        console.error(error);
-      }
-    );
-    logoRenderer.domElement.addEventListener('click', onLogoClickLogo, false);
-    function onLogoClickLogo(event) {
-      const rect = logoRenderer.domElement.getBoundingClientRect();
-      logoMouse.x = ((event.clientX-rect.left)/rect.width)*2-1;
-      logoMouse.y = -((event.clientY-rect.top)/rect.height)*2+1;
-
-      logoRaycaster.setFromCamera(logoMouse,logoCamera);
-
-      if(logoModel){
-        const intersects = logoRaycaster.intersectObject(logoModel,true);
-        if(intersects.length>0){
-          window.location.href='/';
-        }
-      }
-    }
-
-    logoRenderer.domElement.addEventListener('mousemove',onLogoMouseMove,false);
-
-    function onLogoMouseMove(event) {
-      const rect = logoRenderer.domElement.getBoundingClientRect();
-      logoMouse.x = ((event.clientX-rect.left)/rect.width)*2-1;
-      logoMouse.y = -((event.clientY-rect.top)/rect.height)*2+1;
-
-      logoRaycaster.setFromCamera(logoMouse,logoCamera);
-
-      let intersects=[];
-      if(logoModel){
-        intersects=logoRaycaster.intersectObject(logoModel,true);
-      }
-
-      logoRenderer.domElement.style.cursor = intersects.length>0?'pointer':'default';
-    }
-      // Animation loop for the logo
-      function animateLogo() {
-        requestAnimationFrame(animateLogo);
-
-        // Rotate the model
-        if (logoModel) {
-          logoModel.rotation.y += 0.01;
-        }
-
-        logoRenderer.render(logoScene, logoCamera);
-      }
-
-      animateLogo();
-    });
- /*****************************************
- * TOOLTIP LOGIC FOR LOGO & CD
- *****************************************/
-// Grab the tooltip elements
-const logoTooltip = document.getElementById('logo-tooltip');
-const cdTooltip = document.getElementById('cd-tooltip');
-
-// 1. CD Image Tooltip Setup
-const cdImage = document.getElementById('bottom-right-image');
-if (cdImage) {
-  cdImage.addEventListener('mouseenter', showTooltipCD);
-  cdImage.addEventListener('mousemove', moveTooltipCD);
-  cdImage.addEventListener('mouseleave', hideTooltipCD);
-}
-
-function showTooltipCD(event) {
-  cdTooltip.textContent = 'Radio Off'; // or conditionally check bottomRightImage.alt if needed
-  cdTooltip.style.opacity = '1';
-  positionTooltipCD(event);
-}
-
-function moveTooltipCD(event) {
-  if (cdTooltip.style.opacity === '1') {
-    positionTooltipCD(event);
-  }
-}
-
-function positionTooltipCD(event) {
-  const tooltipWidth = cdTooltip.offsetWidth;
-  const tooltipHeight = cdTooltip.offsetHeight;
-  const pageWidth = window.innerWidth;
-  const pageHeight = window.innerHeight;
-
-  let tooltipX = event.clientX + 10; // Offset horizontally
-  let tooltipY = event.clientY - tooltipHeight - 10; // Offset vertically above cursor
-
-  // Prevent tooltip from going off the right edge
-  if (tooltipX + tooltipWidth > pageWidth) {
-    tooltipX = event.clientX - tooltipWidth - 10;
-  }
-  // Prevent tooltip from going above the top edge
-  if (tooltipY < 0) {
-    tooltipY = event.clientY + 10;
-  }
-
-  cdTooltip.style.left = tooltipX + 'px';
-  cdTooltip.style.top = tooltipY + 'px';
-}
-
-function hideTooltipCD() {
-  cdTooltip.style.opacity = '0';
-}
-// 2. LOGO Tooltip Setup
-// If your logo uses a separate WebGLRenderer with a canvas in #model-container:
-
-
-if (logoRenderer) {
-  logoRenderer.addEventListener('mousemove', (event) => {
-    // If the raycast intersects the logo model, show tooltip
-    // For now, let's show the tooltip whenever the mouse is over the canvas
-    showLogoTooltip(event.clientX, event.clientY, 'Home');
-  });
-  logoRenderer.addEventListener('mouseleave', hideLogoTooltip);
-}
-
-function showLogoTooltip(x, y, text) {
-  logoTooltip.textContent = text;
-  logoTooltip.style.left = (x + 10) + 'px';
-  logoTooltip.style.top = y + 'px';
-  logoTooltip.style.opacity = '1';
-}
-
-function hideLogoTooltip() {
-  logoTooltip.style.opacity = '0';
-}
+          
+          function showTooltipCD(event) {
+            cdTooltip.textContent = 'Radio Off'; // or conditionally check bottomRightImage.alt if needed
+            cdTooltip.style.opacity = '1';
+            positionTooltipCD(event);
+          }
+          
+          function moveTooltipCD(event) {
+            if (cdTooltip.style.opacity === '1') {
+              positionTooltipCD(event);
+            }
+          }
+          
+          function positionTooltipCD(event) {
+            const tooltipWidth = cdTooltip.offsetWidth;
+            const tooltipHeight = cdTooltip.offsetHeight;
+            const pageWidth = window.innerWidth;
+            const pageHeight = window.innerHeight;
+            
+            let tooltipX = event.clientX + 10; // Offset horizontally
+            let tooltipY = event.clientY - tooltipHeight - 10; // Offset vertically above cursor
+            
+            // Prevent tooltip from going off the right edge
+            if (tooltipX + tooltipWidth > pageWidth) {
+              tooltipX = event.clientX - tooltipWidth - 10;
+            }
+            // Prevent tooltip from going above the top edge
+            if (tooltipY < 0) {
+              tooltipY = event.clientY + 10;
+            }
+            
+            cdTooltip.style.left = tooltipX + 'px';
+            cdTooltip.style.top = tooltipY + 'px';
+          }
+          
+          function hideTooltipCD() {
+            cdTooltip.style.opacity = '0';
+          }
 </script>
 <script>
   (function() {
